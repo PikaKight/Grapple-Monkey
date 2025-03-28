@@ -1,0 +1,146 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(SolutionDir)UnityCommon.props" />
+  <PropertyGroup Condition="'$(Configuration)'!='MasterWithLTCG'">
+    <UnityPlayerConfiguration>$(Configuration)</UnityPlayerConfiguration>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)'=='MasterWithLTCG'">
+    <UnityPlayerConfiguration>Master</UnityPlayerConfiguration>
+  </PropertyGroup>
+  <PropertyGroup Label="Globals">
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <CodeSharingProject>6A2255BE-B368-4127-9782-BD762DEA33C5</CodeSharingProject>
+    <ItemsProjectGuid>{c102b663-472b-4e4d-b82e-f8b2fad767aa}</ItemsProjectGuid>
+    <HasSharedItems>true</HasSharedItems>
+    <AllowedReferenceRelatedFileExtensions>
+      $(AllowedReferenceRelatedFileExtensions);
+      _UAP_$(PlatformTarget)_$(UnityPlayerConfiguration)_il2cpp.pdb;
+      .pdb;
+    </AllowedReferenceRelatedFileExtensions>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)Data\nativePlugins.txt">
+      <DeploymentContent>true</DeploymentContent>
+      <ExcludeFromResourceIndex>true</ExcludeFromResourceIndex>
+    </None>
+    <Resource Include="$(MSBuildThisFileDirectory)Resource.res">
+    </Resource>
+    <ClInclude Include="$(MSBuildThisFileDirectory)UnityGenerated.h">
+    </ClInclude>
+    <ClCompile Include="$(MSBuildThisFileDirectory)UnityGenerated.cpp">
+    </ClCompile>
+    <None Include="$(MSBuildThisFileDirectory)Data\globalgamemanagers">
+      <DeploymentContent>true</DeploymentContent>
+      <ExcludeFromResourceIndex>true</ExcludeFromResourceIndex>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Data\globalgamemanagers.assets">
+      <DeploymentContent>true</DeploymentContent>
+      <ExcludeFromResourceIndex>true</ExcludeFromResourceIndex>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Data\globalgamemanagers.assets.resS">
+      <DeploymentContent>true</DeploymentContent>
+      <ExcludeFromResourceIndex>true</ExcludeFromResourceIndex>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Data\level0">
+      <DeploymentContent>true</DeploymentContent>
+      <ExcludeFromResourceIndex>true</ExcludeFromResourceIndex>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Data\resources.assets">
+      <DeploymentContent>true</DeploymentContent>
+      <ExcludeFromResourceIndex>true</ExcludeFromResourceIndex>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Data\resources.assets.resS">
+      <DeploymentContent>true</DeploymentContent>
+      <ExcludeFromResourceIndex>true</ExcludeFromResourceIndex>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Data\Resources\unity_builtin_extra">
+      <DeploymentContent>true</DeploymentContent>
+      <ExcludeFromResourceIndex>true</ExcludeFromResourceIndex>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Data\RuntimeInitializeOnLoads.json">
+      <DeploymentContent>true</DeploymentContent>
+      <ExcludeFromResourceIndex>true</ExcludeFromResourceIndex>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Data\ScriptingAssemblies.json">
+      <DeploymentContent>true</DeploymentContent>
+      <ExcludeFromResourceIndex>true</ExcludeFromResourceIndex>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Data\sharedassets0.assets">
+      <DeploymentContent>true</DeploymentContent>
+      <ExcludeFromResourceIndex>true</ExcludeFromResourceIndex>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Data\sharedassets0.assets.resS">
+      <DeploymentContent>true</DeploymentContent>
+      <ExcludeFromResourceIndex>true</ExcludeFromResourceIndex>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Data\boot.config">
+      <DeploymentContent>true</DeploymentContent>
+      <ExcludeFromResourceIndex>true</ExcludeFromResourceIndex>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)Data\Resources\unity default resources">
+      <DeploymentContent>true</DeploymentContent>
+      <ExcludeFromResourceIndex>true</ExcludeFromResourceIndex>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)lib_burst_generated.dll" Condition="Exists('$(MSBuildThisFileDirectory)Plugins\$(PlatformShortName)\lib_burst_generated.dll')">
+      <DeploymentContent>true</DeploymentContent>
+      <ExcludeFromResourceIndex>true</ExcludeFromResourceIndex>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)lib_burst_generated.pdb" Condition="Exists('$(MSBuildThisFileDirectory)Plugins\$(PlatformShortName)\lib_burst_generated.pdb')">
+      <DeploymentContent>true</DeploymentContent>
+      <ExcludeFromResourceIndex>true</ExcludeFromResourceIndex>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="$(UnityWSAPlayerDir)Players\UAP\il2cpp\$(PlatformTarget)\$(UnityPlayerConfiguration)\UnityPlayer.winmd">
+      <IsWinMDFile>true</IsWinMDFile>
+    </Reference>
+    <None Include="$(OutDir)GameAssembly.dll">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+
+    <None Include="$(OutDir)GameAssembly.pdb">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="$(UnityWSAPlayerDir)Players\UAP\il2cpp\$(PlatformTarget)\$(UnityPlayerConfiguration)\baselib.dll">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="$(UnityWSAPlayerDir)Players\UAP\il2cpp\$(PlatformTarget)\$(UnityPlayerConfiguration)\baselib_UAP_$(PlatformTarget)_$(UnityPlayerConfiguration)_il2cpp.pdb">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+  </ItemGroup>
+  <ItemGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64' OR '$(Configuration)|$(Platform)'=='Release|x64'">
+    <None Include="$(UnityWSAPlayerDir)Players\UAP\il2cpp\$(PlatformTarget)\$(UnityPlayerConfiguration)\WinPixEventRuntime_UAP.dll">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+  </ItemGroup>
+  <ItemGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64' OR '$(Configuration)|$(Platform)'=='Release|ARM64'">
+    <None Include="$(UnityWSAPlayerDir)Players\UAP\il2cpp\$(PlatformTarget)\$(UnityPlayerConfiguration)\WinPixEventRuntime_UAP.dll">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+  </ItemGroup>
+  <ItemGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <None Include="$(UnityWSAPlayerDir)Players\UAP\il2cpp\$(PlatformTarget)\$(UnityPlayerConfiguration)\vcruntime140_1d_app.dll">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+  </ItemGroup>
+ <ItemGroup Condition="true">
+    <None Include="$(UnityWSAPlayerDir)External\AgilitySdk\$(PlatformTarget)\D3D12Core.dll">
+      <DeploymentContent>true</DeploymentContent>
+      <TargetPath>D3D12\D3D12Core.dll</TargetPath>
+    </None>
+  </ItemGroup>
+ <ItemGroup Condition="true AND ('$(Configuration)'=='Debug' OR '$(Configuration)'=='Release')">
+    <None Include="$(UnityWSAPlayerDir)External\AgilitySdk\$(PlatformTarget)\d3d12SDKLayers.dll">
+      <DeploymentContent>true</DeploymentContent>
+      <TargetPath>D3D12\d3d12SDKLayers.dll</TargetPath>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectCapability Include="SourceItemsFromImports" />
+  </ItemGroup>
+  <Target Name="BeforeResolveReferences" Condition="'$(BuildingProject)' == 'true'">
+    <Copy SourceFiles="$(MSBuildThisFileDirectory)Plugins\$(PlatformShortName)\lib_burst_generated.dll" DestinationFiles="$(MSBuildThisFileDirectory)lib_burst_generated.dll" Condition="Exists('$(MSBuildThisFileDirectory)Plugins\$(PlatformShortName)\lib_burst_generated.dll')" />
+    <Delete Files="$(MSBuildThisFileDirectory)lib_burst_generated.pdb" Condition="Exists('$(MSBuildThisFileDirectory)lib_burst_generated.pdb')" />
+    <Copy SourceFiles="$(MSBuildThisFileDirectory)Plugins\$(PlatformShortName)\lib_burst_generated.pdb" DestinationFiles="$(MSBuildThisFileDirectory)lib_burst_generated.pdb" Condition="Exists('$(MSBuildThisFileDirectory)Plugins\$(PlatformShortName)\lib_burst_generated.pdb')" />
+  </Target>
+</Project>
