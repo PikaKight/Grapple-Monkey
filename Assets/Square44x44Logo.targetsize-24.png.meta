@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Square44x44Logo.targetsize-24_0: 5283093988303733593
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

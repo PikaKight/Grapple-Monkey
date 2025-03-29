@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Wide310x150Logo.scale-200_0: 4944234664328954476
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
