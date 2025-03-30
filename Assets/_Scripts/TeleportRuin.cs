@@ -7,7 +7,8 @@ public class TeleportRuin : MonoBehaviour
     {
         if (collision.tag == "Player")
         {
-            SceneManager.LoadScene("Level 2");
+            int activeScene = SceneManager.GetActiveScene().buildIndex;
+            SceneManager.LoadScene(activeScene + 1);
         }
     }
 }
