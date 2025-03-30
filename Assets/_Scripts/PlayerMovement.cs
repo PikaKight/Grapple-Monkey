@@ -9,16 +9,20 @@ public class PlayerMovement : MonoBehaviour
     public CircleCollider2D collider;
     public float moveSpeed;
     public GameObject ground;
-    
+
     private LineRenderer lineRenderer;
     Vector3 originalPos;
-    
+
     public static bool sDown = false;
     public static bool dashing = false;
     public static float canSwing = 0;
     public static float dashCooldown = 0;
-    
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
+    // added max swing time and dash cooldown in seconds - michael
+    private const float maxSwingTime = 2f; // max grapple time in seconds - michael
+    private const float maxDashCooldown = 5f; // dash cooldown in seconds - michael
+
+    // start is called once before the first execution of update after the monobehaviour is created - michael
     void Start()
     {
         lineRenderer = gameObject.AddComponent<LineRenderer>();
@@ -31,10 +35,10 @@ public class PlayerMovement : MonoBehaviour
         lineRenderer.enabled = false;
     }
 
-    // Update is called once per frame
+    // update is called once per frame - michael
     void Update()
-    { 
-        //Swinging
+    {
+        // swinging - michael
         if (Input.GetKey(KeyCode.S) && !sDown && canSwing == 0)
         {
             sDown = true;
@@ -43,9 +47,9 @@ public class PlayerMovement : MonoBehaviour
             lineRenderer.enabled = true;
             body.Sleep();
         }
-        else if (Input.GetKey(KeyCode.S) && sDown && canSwing < 200)
-        { 
-            canSwing += 0.1f;
+        else if (Input.GetKey(KeyCode.S) && sDown && canSwing < maxSwingTime)
+        {
+            canSwing += Time.deltaTime; // add delta time for consistent timing - michael
             lineRenderer.SetPosition(0, body.position);
             lineRenderer.SetPosition(1, originalPos);
             Physics.gravity = new Vector2(0, 0);
@@ -53,51 +57,52 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            canSwing -= 0.1f;
+            canSwing -= Time.deltaTime; // subtract delta time for consistent timing - michael
             if (canSwing < 0)
             {
                 canSwing = 0;
             }
-            
+
             sDown = false;
             body.gravityScale = 3;
             lineRenderer.enabled = false;
-            
-            //Left/right movement
+
+            // left/right movement - michael
             if (!dashing)
             {
-                body.linearVelocity = new Vector2(Input.GetAxis("Horizontal") * moveSpeed, body.linearVelocity.y);
+                body.linearVelocity = new Vector2(Input.GetAxis("Horizontal") * moveSpeed, body.linearVelocity.y); // using velocity property - michael
             }
             if (IsGrounded())
             {
                 dashing = false;
             }
 
-            //Jumping
+            // jumping - michael
             if (Input.GetKeyDown(KeyCode.Space) && IsGrounded())
             {
                 body.AddForce(Vector2.up * 1000);
             }
-            //If on second level, dashing is enabled
+            // if on second level, dashing is enabled - michael
             if (SceneManager.GetActiveScene().name == "Level 2" && dashCooldown <= 0 && Input.GetMouseButtonDown(0))
             {
                 dashing = true;
-                dashCooldown = 5000f;
+                dashCooldown = maxDashCooldown; // set cooldown with delta time based value - michael
                 float dashSpeed = 20f;
 
                 Vector2 playerScreenPosition = Camera.main.WorldToScreenPoint(body.transform.position);
                 Vector2 mouseScreenPosition = Input.mousePosition;
 
                 Vector2 playerToMouseVector = (mouseScreenPosition - playerScreenPosition).normalized;
-                //Debug.Log("playerToMouseVector is " + playerToMouseVector);
-    
-                body.linearVelocity = playerToMouseVector * dashSpeed;
+                // debug: log player to mouse vector - michael
+
+                body.linearVelocity = playerToMouseVector * dashSpeed; // using velocity property - michael
             }
         }
-        dashCooldown--;
+        dashCooldown -= Time.deltaTime; // subtract delta time for cooldown - michael
+        if (dashCooldown < 0) dashCooldown = 0; // clamp to zero - michael
     }
-    
-    //Check if user is touching ground
+
+    // check if user is touching ground - michael
     bool IsGrounded()
     {
         foreach (Collider2D groundCollider in ground.GetComponentsInChildren<Collider2D>())
