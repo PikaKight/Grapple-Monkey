@@ -53,8 +53,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            canSwing -= Time.deltaTime;
-
+            canSwing -= 0.1f;
             if (canSwing < 0)
             {
                 canSwing = 0;
