@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Windows;
 using Input = UnityEngine.Input;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -13,7 +14,9 @@ public class PlayerMovement : MonoBehaviour
     Vector3 originalPos;
     
     public static bool sDown = false;
+    public static bool dashing = false;
     public static float canSwing = 0;
+    public static float dashCooldown = 0;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -61,15 +64,37 @@ public class PlayerMovement : MonoBehaviour
             lineRenderer.enabled = false;
             
             //Left/right movement
-            body.linearVelocity = new Vector2(Input.GetAxis("Horizontal") * moveSpeed, body.linearVelocity.y);
+            if (!dashing)
+            {
+                body.linearVelocity = new Vector2(Input.GetAxis("Horizontal") * moveSpeed, body.linearVelocity.y);
+            }
+            if (IsGrounded())
+            {
+                dashing = false;
+            }
 
             //Jumping
             if (Input.GetKeyDown(KeyCode.Space) && IsGrounded())
             {
                 body.AddForce(Vector2.up * 1000);
             }
+            //If on second level, dashing is enabled
+            if (SceneManager.GetActiveScene().name == "Level 2" && dashCooldown <= 0 && Input.GetMouseButtonDown(0))
+            {
+                dashing = true;
+                dashCooldown = 5000f;
+                float dashSpeed = 20f;
+
+                Vector2 playerScreenPosition = Camera.main.WorldToScreenPoint(body.transform.position);
+                Vector2 mouseScreenPosition = Input.mousePosition;
+
+                Vector2 playerToMouseVector = (mouseScreenPosition - playerScreenPosition).normalized;
+                //Debug.Log("playerToMouseVector is " + playerToMouseVector);
+    
+                body.linearVelocity = playerToMouseVector * dashSpeed;
+            }
         }
-        
+        dashCooldown--;
     }
     
     //Check if user is touching ground
