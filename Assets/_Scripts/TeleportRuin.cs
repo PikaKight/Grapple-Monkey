@@ -5,6 +5,6 @@ public class TeleportRuin : MonoBehaviour
 {
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        SceneManager.LoadScene("Level 2");
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Level 2");
     }
 }
