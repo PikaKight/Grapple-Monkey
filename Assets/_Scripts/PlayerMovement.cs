@@ -42,7 +42,7 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKey(KeyCode.S) && !sDown && canSwing == 0)
         {
             sDown = true;
-            originalPos = new Vector2(body.position.x + 4, 9.5f);
+            originalPos = new Vector2(body.position.x + 4, 10.0f);
             body.gravityScale = 0;
             lineRenderer.enabled = true;
             body.Sleep();
