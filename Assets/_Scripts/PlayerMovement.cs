@@ -17,9 +17,14 @@ public class PlayerMovement : MonoBehaviour
     public static bool dashing = false;
     public static float canSwing = 0;
     public static float dashCooldown = 0;
+    
+    private float swingRadius = 10f;
+    private float swingSpeed = 2f;
+    private float swingAngle;
+    private Vector2 startingPoint;
 
     // added max swing time and dash cooldown in seconds - michael
-    private const float maxSwingTime = 2f; // max grapple time in seconds - michael
+    private const float maxSwingTime = 1.5f; // max grapple time in seconds - michael
     private const float maxDashCooldown = 5f; // dash cooldown in seconds - michael
 
     // start is called once before the first execution of update after the monobehaviour is created - michael
@@ -42,9 +47,11 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKey(KeyCode.S) && !sDown && canSwing == 0)
         {
             sDown = true;
-            originalPos = new Vector2(body.position.x + 4, 10.0f);
+            startingPoint = body.position;
+            originalPos = new Vector2(body.position.x + swingRadius, 10.0f);
             body.gravityScale = 0;
             lineRenderer.enabled = true;
+            swingAngle = 0f;
             body.Sleep();
         }
         else if (Input.GetKey(KeyCode.S) && sDown && canSwing < maxSwingTime)
@@ -53,7 +60,10 @@ public class PlayerMovement : MonoBehaviour
             lineRenderer.SetPosition(0, body.position);
             lineRenderer.SetPosition(1, originalPos);
             Physics.gravity = new Vector2(0, 0);
-            body.position = new Vector2(transform.position.x + 0.2f, body.position.y);
+            swingAngle += Time.deltaTime * swingSpeed;
+            float x = Mathf.Cos(swingAngle) * swingRadius;
+            float y = Mathf.Sin(swingAngle) * swingRadius * 0.1f;
+            body.position = new Vector2(originalPos.x - x, startingPoint.y - y);
         }
         else
         {
