@@ -63,7 +63,7 @@ public class PlayerMovement : MonoBehaviour
             swingAngle += Time.deltaTime * swingSpeed;
             float x = Mathf.Cos(swingAngle) * swingRadius;
             float y = Mathf.Sin(swingAngle) * swingRadius * 0.1f;
-            body.position = new Vector2(originalPos.x - x, startingPoint.y - y);
+            body.MovePosition(new Vector2(originalPos.x - x, startingPoint.y - y));
         }
         else
         {
