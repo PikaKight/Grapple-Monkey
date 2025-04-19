@@ -4,7 +4,8 @@ public class SpikeCollision : MonoBehaviour
 {
     void OnCollisionEnter2D(Collision2D col)
     {
-        collision.collider.gameObject.transform.position = new Vector3(-18, -8, 0);
-        PlayerMovement.canSwing = 0;
+        if (!col.collider.CompareTag("Player")) return;
+        var pm = col.collider.GetComponent<PlayerMovement>();
+        if (pm != null) pm.Respawn();
     }
 }
