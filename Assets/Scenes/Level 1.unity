@@ -20524,7 +20524,7 @@ PrefabInstance:
     - target: {fileID: 3059678935408276548, guid: d536ad89121a39f40a6761285eef81d3,
         type: 3}
       propertyPath: m_FlipX
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5722909805789403887, guid: d536ad89121a39f40a6761285eef81d3,
         type: 3}
@@ -20586,12 +20586,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d536ad89121a39f40a6761285eef81d3, type: 3}
---- !u!4 &612885347 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8106634067198165115, guid: d536ad89121a39f40a6761285eef81d3,
-    type: 3}
-  m_PrefabInstance: {fileID: 612885346}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -47692,7 +47686,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1731515872}
-  - {fileID: 612885347}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2014189921
@@ -48180,3 +48173,4 @@ SceneRoots:
   - {fileID: 1002742192}
   - {fileID: 2014189922}
   - {fileID: 1632192313}
+  - {fileID: 612885346}
