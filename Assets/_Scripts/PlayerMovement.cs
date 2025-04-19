@@ -40,7 +40,7 @@ public class PlayerMovement : MonoBehaviour
 
     private bool canDash, canDoubleJump, facingRight = true;
     private int jumpCount;
-    private const float maxSwingTime = 2f, maxDashCooldown = 5f;
+    private const float maxSwingTime = 1.5f, maxDashCooldown = 5f;
 
     void Start()
     {
@@ -153,7 +153,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // Dash
-        if (canDash && dashCooldown <= 0f && Input.GetKeyDown(KeyCode.LeftShift))
+        if (canDash && dashCooldown <= 0f && Input.GetMouseButtonDown(0))
             StartDash();
 
         dashCooldown = Mathf.Max(0f, dashCooldown - Time.deltaTime);
@@ -179,15 +179,21 @@ public class PlayerMovement : MonoBehaviour
         dashing = true;
         dashCooldown = maxDashCooldown;
         animator.SetTrigger("dash");
-        Vector3 dir = facingRight ? Vector3.right : Vector3.left;
-        body.linearVelocity = dir * 20f;
-        Invoke(nameof(EndDash), 0.1f);
+        float dashSpeed = 20f;
+
+        Vector2 playerScreenPosition = Camera.main.WorldToScreenPoint(body.transform.position);
+        Vector2 mouseScreenPosition = Input.mousePosition;
+
+        Vector2 playerToMouseVector = (mouseScreenPosition - playerScreenPosition).normalized;
+
+        body.linearVelocity = playerToMouseVector * dashSpeed;
     }
 
     private void EndDash() => dashing = false;
 
     private bool IsGrounded()
     {
+        EndDash();
         foreach (var gc in ground.GetComponentsInChildren<Collider2D>())
             if (playerCollider.IsTouching(gc))
                 return true;
