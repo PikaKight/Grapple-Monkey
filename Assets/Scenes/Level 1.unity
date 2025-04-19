@@ -23306,6 +23306,21 @@ PrefabInstance:
       propertyPath: m_Size.x
       value: 0.34882104
       objectReference: {fileID: 0}
+    - target: {fileID: 3392816517820999306, guid: fabe0036d14f0ac4ea6b6dc67fd47022,
+        type: 3}
+      propertyPath: isCond
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3392816517820999306, guid: fabe0036d14f0ac4ea6b6dc67fd47022,
+        type: 3}
+      propertyPath: enemies.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3392816517820999306, guid: fabe0036d14f0ac4ea6b6dc67fd47022,
+        type: 3}
+      propertyPath: 'enemies.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1731515871}
     - target: {fileID: 5102209194795058982, guid: fabe0036d14f0ac4ea6b6dc67fd47022,
         type: 3}
       propertyPath: m_LocalScale.x
@@ -47897,8 +47912,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1593446992}
   - component: {fileID: 1593446991}
+  - component: {fileID: 1593446993}
   m_Layer: 0
-  m_Name: TX Village Props - Stone of Recall
+  m_Name: Stone of Recall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -47975,6 +47991,18 @@ Transform:
   - {fileID: 248240228}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1593446993
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1593446990}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a21de1da4eafa43a88d69158b53ae000, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1690307585
 GameObject:
   m_ObjectHideFlags: 0
@@ -48128,6 +48156,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1696147711}
   m_CullTransparentMesh: 1
+--- !u!1 &1731515871 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5382157297405403696, guid: 3c6580fa80899a54f9f48b3dfc1bde96,
+    type: 3}
+  m_PrefabInstance: {fileID: 4217052726974487309}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1731515872 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6370479743869298144, guid: 3c6580fa80899a54f9f48b3dfc1bde96,

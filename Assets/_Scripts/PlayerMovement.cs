@@ -23,6 +23,9 @@ public class PlayerMovement : MonoBehaviour
     private float swingAngle;
     private Vector2 startingPoint;
 
+
+    bool isGround = false;
+
     // added max swing time and dash cooldown in seconds - michael
     private const float maxSwingTime = 1.5f; // max grapple time in seconds - michael
     private const float maxDashCooldown = 5f; // dash cooldown in seconds - michael
@@ -88,7 +91,7 @@ public class PlayerMovement : MonoBehaviour
             }
 
             // jumping - michael
-            if (Input.GetKeyDown(KeyCode.Space) && IsGrounded())
+            if (Input.GetKeyDown(KeyCode.Space) && isGround)
             {
                 body.AddForce(Vector2.up * 1000);
             }
@@ -111,6 +114,21 @@ public class PlayerMovement : MonoBehaviour
         dashCooldown -= Time.deltaTime; // subtract delta time for cooldown - michael
         if (dashCooldown < 0) dashCooldown = 0; // clamp to zero - michael
     }
+
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Ground")
+        {
+            isGround = true;
+        }
+
+        else
+        {
+            isGround = false;
+        }
+    }
+
 
     // check if user is touching ground - michael
     bool IsGrounded()
