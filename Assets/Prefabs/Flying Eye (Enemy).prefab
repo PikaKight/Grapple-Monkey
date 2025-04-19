@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 6370479743869298144}
   - component: {fileID: 7407040076858165503}
   - component: {fileID: 3542640548465825455}
-  - component: {fileID: 2052396688463925738}
   - component: {fileID: 8981825703651278326}
   - component: {fileID: 342064993614829808}
+  - component: {fileID: 5672644741233326402}
+  - component: {fileID: 2895438556694866499}
   m_Layer: 0
   m_Name: Flying Eye (Enemy)
   m_TagString: Enemy
@@ -29,7 +30,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5382157297405403696}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 22.47, y: -2.7, z: -0.35497496}
   m_LocalScale: {x: 7.266576, y: 9.08351, z: 1}
   m_ConstrainProportionsScale: 0
@@ -118,19 +119,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 4
---- !u!114 &2052396688463925738
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5382157297405403696}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 966a5ce8de8f3413faf58b61198d7239, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Constraints: 6
 --- !u!70 &8981825703651278326
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -190,3 +179,35 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &5672644741233326402
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5382157297405403696}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6debf670122b7b546b2960fce0a581ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 2
+  detectionRange: 10
+  attackRange: 1.5
+  attackCooldown: 2
+--- !u!114 &2895438556694866499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5382157297405403696}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6debf670122b7b546b2960fce0a581ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 2
+  detectionRange: 10
+  attackRange: 1.5
+  attackCooldown: 2

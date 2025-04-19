@@ -152,38 +152,29 @@ public class PlayerMovement : MonoBehaviour
         transform.localScale = s;
     }
 
-            // jumping - michael
-            if (Input.GetKeyDown(KeyCode.Space) && IsGrounded())
-            {
-                body.AddForce(Vector2.up * 1000);
-            }
-            // if on second level, dashing is enabled - michael
-            if (SceneManager.GetActiveScene().name == "Level 2" && dashCooldown <= 0 && Input.GetMouseButtonDown(0))
-            {
-                dashing = true;
-                dashCooldown = maxDashCooldown; // set cooldown with delta time based value - michael
-                float dashSpeed = 20f;
-
-                Vector2 playerScreenPosition = Camera.main.WorldToScreenPoint(body.transform.position);
-                Vector2 mouseScreenPosition = Input.mousePosition;
-
-                Vector2 playerToMouseVector = (mouseScreenPosition - playerScreenPosition).normalized;
-                // debug: log player to mouse vector - michael
-
-                body.linearVelocity = playerToMouseVector * dashSpeed; // using velocity property - michael
-            }
-        }
-        dashCooldown -= Time.deltaTime; // subtract delta time for cooldown - michael
-        if (dashCooldown < 0) dashCooldown = 0; // clamp to zero - michael
+    private void DoJump()
+    {
+        animator.SetTrigger("jump");
+        body.linearVelocity = new Vector2(body.linearVelocity.x, 0f);
+        body.AddForce(Vector2.up * jumpForce);
     }
 
-    // check if user is touching ground - michael
-    bool IsGrounded()
+    private void StartDash()
     {
-        foreach (Collider2D groundCollider in ground.GetComponentsInChildren<Collider2D>())
-        {
-            if (collider.IsTouching(groundCollider))
-            {
+        dashing = true;
+        dashCooldown = maxDashCooldown;
+        animator.SetTrigger("dash");
+        Vector3 dir = facingRight ? Vector3.right : Vector3.left;
+        body.linearVelocity = dir * 20f;
+        Invoke(nameof(EndDash), 0.1f);
+    }
+
+    private void EndDash() => dashing = false;
+
+    private bool IsGrounded()
+    {
+        foreach (var gc in ground.GetComponentsInChildren<Collider2D>())
+            if (playerCollider.IsTouching(gc))
                 return true;
         return false;
     }
