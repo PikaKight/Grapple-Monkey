@@ -26,8 +26,6 @@ public class CollectableController : MonoBehaviour
                 break ;
         }
 
-        
-
         gameObject.SetActive(false);
     }
 }
