@@ -44,14 +44,18 @@ public class PlayerMovement : MonoBehaviour
 
         // — Grapple line setup —
         lineRenderer = gameObject.AddComponent<LineRenderer>();
+
         lineRenderer.startWidth = 1f;
         lineRenderer.endWidth = 1f;
         lineRenderer.widthMultiplier = lineWidth;
+
         lineRenderer.useWorldSpace = true;
         lineRenderer.positionCount = 2;
+
         lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
         lineRenderer.startColor = Color.red;
         lineRenderer.endColor = Color.red;
+
         lineRenderer.enabled = false;
 
         // Unlock dash/double‑jump by scene name
@@ -69,12 +73,10 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKey(KeyCode.S) && !sDown && canSwing == 0f)
         {
             StartGrapple();
-            return;
         }
         if (Input.GetKey(KeyCode.S) && sDown && canSwing < maxSwingTime)
         {
             ContinueGrapple();
-            return;
         }
         EndGrappleCleanup();
 
@@ -114,6 +116,7 @@ public class PlayerMovement : MonoBehaviour
     {
         bool grounded = IsGrounded();
         animator.SetBool("isGrounded", grounded);
+
         if (grounded) jumpCount = 0;
 
         float h = Input.GetAxis("Horizontal");
