@@ -1,20 +1,21 @@
-using UnityEngine;
+﻿using UnityEngine;
 
+[RequireComponent(typeof(EnemyController))]
 public class EnemyCollision : MonoBehaviour
 {
-    void OnCollisionEnter2D(Collision2D collision){
-        if (collision.gameObject.tag == "Player")
-        {
-            if (PlayerMovement.sDown || PlayerMovement.dashing)
-            {
-                Destroy(gameObject);
-            }
-            else
-            {
-                collision.collider.gameObject.transform.position = new Vector3(-18, -8, 0);
-                PlayerMovement.canSwing = 0;
-            }
-        }
-        
+    private EnemyController _ctrl;
+
+    void Awake()
+    {
+        _ctrl = GetComponent<EnemyController>();
+    }
+
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        if (!col.collider.CompareTag("Player")) return;
+
+        // if player is mid‑swing or dashing, kill the enemy
+        if (PlayerMovement.sDown || PlayerMovement.dashing)
+            _ctrl.Die();
     }
 }
