@@ -1,127 +1,218 @@
+using System.Collections;
 using UnityEngine;
-using UnityEngine.Windows;
-using Input = UnityEngine.Input;
 using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [Header("Movement")]
     public Rigidbody2D body;
-    public CircleCollider2D collider;
-    public float moveSpeed;
+    public BoxCollider2D playerCollider;
+    public float moveSpeed = 8f;
     public GameObject ground;
 
+    [Header("Animation")]
+    public Animator animator;
+
+    [Header("Grapple Settings")]
+    [Range(0.01f, 0.5f)] public float lineWidth = 0.05f;
+
+    [Header("Jump Settings")]
+    [Range(100f, 2000f)] public float jumpForce = 600f;
+
+    [Header("Respawn Settings")]
+    [Tooltip("Delay in seconds before actually teleporting back")]
+    public float respawnDelay = 1f;
+
+    // Grapple internals
     private LineRenderer lineRenderer;
-    Vector3 originalPos;
+    private Vector3 originalPos;
 
-    public static bool sDown = false;
-    public static bool dashing = false;
-    public static float canSwing = 0;
-    public static float dashCooldown = 0;
-    
-    private float swingRadius = 10f;
-    private float swingSpeed = 2f;
-    private float swingAngle;
-    private Vector2 startingPoint;
+    // State
+    private Vector3 _spawnPoint;
+    private bool isDead = false;         // BLOCKS Update until respawn
 
-    // added max swing time and dash cooldown in seconds - michael
-    private const float maxSwingTime = 1.5f; // max grapple time in seconds - michael
-    private const float maxDashCooldown = 5f; // dash cooldown in seconds - michael
+    public static bool sDown, dashing;
+    public static float canSwing, dashCooldown;
 
-    // start is called once before the first execution of update after the monobehaviour is created - michael
+    private bool canDash, canDoubleJump, facingRight = true;
+    private int jumpCount;
+    private const float maxSwingTime = 2f, maxDashCooldown = 5f;
+
     void Start()
     {
+        _spawnPoint = transform.position;
+
+        // — Grapple line setup —
         lineRenderer = gameObject.AddComponent<LineRenderer>();
-        lineRenderer.startWidth = 0.1f;
-        lineRenderer.endWidth = 0.1f;
+
+        lineRenderer.startWidth = 1f;
+        lineRenderer.endWidth = 1f;
+        lineRenderer.widthMultiplier = lineWidth;
+
+        lineRenderer.useWorldSpace = true;
+        lineRenderer.positionCount = 2;
+
         lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
         lineRenderer.startColor = Color.red;
         lineRenderer.endColor = Color.red;
-        lineRenderer.positionCount = 2;
+
         lineRenderer.enabled = false;
+
+        // Unlock dash/double‑jump by scene name
+        var lvl = SceneManager.GetActiveScene().name;
+        canDash = lvl == "Level 2" || lvl == "Level 3";
+        canDoubleJump = lvl == "Level 3";
     }
 
-    // update is called once per frame - michael
     void Update()
     {
-        // swinging - michael
-        if (Input.GetKey(KeyCode.S) && !sDown && canSwing == 0)
+        // 1) Block all input while “dead”
+        if (isDead) return;
+
+        // 2) Grapple
+        if (Input.GetKey(KeyCode.S) && !sDown && canSwing == 0f)
         {
-            sDown = true;
-            startingPoint = body.position;
-            originalPos = new Vector2(body.position.x + swingRadius, 10.0f);
-            body.gravityScale = 0;
-            lineRenderer.enabled = true;
-            swingAngle = 0f;
-            body.Sleep();
+            StartGrapple();
         }
-        else if (Input.GetKey(KeyCode.S) && sDown && canSwing < maxSwingTime)
+        if (Input.GetKey(KeyCode.S) && sDown && canSwing < maxSwingTime)
         {
-            canSwing += Time.deltaTime; // add delta time for consistent timing - michael
-            lineRenderer.SetPosition(0, body.position);
-            lineRenderer.SetPosition(1, originalPos);
-            Physics.gravity = new Vector2(0, 0);
-            swingAngle += Time.deltaTime * swingSpeed;
-            float x = Mathf.Cos(swingAngle) * swingRadius;
-            float y = Mathf.Sin(swingAngle) * swingRadius * 0.1f;
-            body.MovePosition(new Vector2(originalPos.x - x, startingPoint.y - y));
+            ContinueGrapple();
         }
-        else
-        {
-            canSwing -= Time.deltaTime; // subtract delta time for consistent timing - michael
-            if (canSwing < 0)
-            {
-                canSwing = 0;
-            }
+        EndGrappleCleanup();
 
-            sDown = false;
-            body.gravityScale = 3;
-            lineRenderer.enabled = false;
-
-            // left/right movement - michael
-            if (!dashing)
-            {
-                body.linearVelocity = new Vector2(Input.GetAxis("Horizontal") * moveSpeed, body.linearVelocity.y); // using velocity property - michael
-            }
-            if (IsGrounded())
-            {
-                dashing = false;
-            }
-
-            // jumping - michael
-            if (Input.GetKeyDown(KeyCode.Space) && IsGrounded())
-            {
-                body.AddForce(Vector2.up * 1000);
-            }
-            // if on second level, dashing is enabled - michael
-            if (SceneManager.GetActiveScene().name == "Level 2" && dashCooldown <= 0 && Input.GetMouseButtonDown(0))
-            {
-                dashing = true;
-                dashCooldown = maxDashCooldown; // set cooldown with delta time based value - michael
-                float dashSpeed = 20f;
-
-                Vector2 playerScreenPosition = Camera.main.WorldToScreenPoint(body.transform.position);
-                Vector2 mouseScreenPosition = Input.mousePosition;
-
-                Vector2 playerToMouseVector = (mouseScreenPosition - playerScreenPosition).normalized;
-                // debug: log player to mouse vector - michael
-
-                body.linearVelocity = playerToMouseVector * dashSpeed; // using velocity property - michael
-            }
-        }
-        dashCooldown -= Time.deltaTime; // subtract delta time for cooldown - michael
-        if (dashCooldown < 0) dashCooldown = 0; // clamp to zero - michael
+        // 3) Movement & Abilities
+        HandleMovement();
     }
 
-    // check if user is touching ground - michael
-    bool IsGrounded()
+    void StartGrapple()
     {
-        foreach (Collider2D groundCollider in ground.GetComponentsInChildren<Collider2D>())
+        sDown = true;
+        originalPos = new Vector3(body.position.x + 4f, 9.5f, 0f);
+        body.gravityScale = 0f;
+        lineRenderer.enabled = true;
+        body.Sleep();
+    }
+
+    void ContinueGrapple()
+    {
+        canSwing += Time.deltaTime;
+        lineRenderer.SetPosition(0, body.position);
+        lineRenderer.SetPosition(1, originalPos);
+        Physics.gravity = Vector2.zero;
+        body.position = new Vector2(transform.position.x + 0.2f, body.position.y);
+    }
+
+    void EndGrappleCleanup()
+    {
+        canSwing -= Time.deltaTime;
+        if (canSwing < 0f) canSwing = 0f;
+        sDown = false;
+        body.gravityScale = 3f;
+        lineRenderer.enabled = false;
+        Physics.gravity = new Vector2(0, -9.81f);
+    }
+
+    void HandleMovement()
+    {
+        bool grounded = IsGrounded();
+        animator.SetBool("isGrounded", grounded);
+
+        if (grounded) jumpCount = 0;
+
+        float h = Input.GetAxis("Horizontal");
+        animator.SetBool("isRunning", Mathf.Abs(h) > 0.1f);
+
+        if (!dashing)
+            body.linearVelocity = new Vector2(h * moveSpeed, body.linearVelocity.y);
+
+        // Flip sprite
+        if (h > 0 && !facingRight) Flip();
+        if (h < 0 && facingRight) Flip();
+
+        // Jump & Double‑Jump
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (collider.IsTouching(groundCollider))
+            if (grounded) DoJump();
+            else if (canDoubleJump && jumpCount < 1)
             {
-                return true;
+                jumpCount++;
+                DoJump();
             }
         }
+
+        // Dash
+        if (canDash && dashCooldown <= 0f && Input.GetKeyDown(KeyCode.LeftShift))
+            StartDash();
+
+        dashCooldown = Mathf.Max(0f, dashCooldown - Time.deltaTime);
+    }
+
+    private void Flip()
+    {
+        facingRight = !facingRight;
+        var s = transform.localScale;
+        s.x *= -1f;
+        transform.localScale = s;
+    }
+
+    private void DoJump()
+    {
+        animator.SetTrigger("jump");
+        body.linearVelocity = new Vector2(body.linearVelocity.x, 0f);
+        body.AddForce(Vector2.up * jumpForce);
+    }
+
+    private void StartDash()
+    {
+        dashing = true;
+        dashCooldown = maxDashCooldown;
+        animator.SetTrigger("dash");
+        Vector3 dir = facingRight ? Vector3.right : Vector3.left;
+        body.linearVelocity = dir * 20f;
+        Invoke(nameof(EndDash), 0.1f);
+    }
+
+    private void EndDash() => dashing = false;
+
+    private bool IsGrounded()
+    {
+        foreach (var gc in ground.GetComponentsInChildren<Collider2D>())
+            if (playerCollider.IsTouching(gc))
+                return true;
         return false;
+    }
+
+    /// <summary>
+    /// Call this to trigger death+respawn.
+    /// </summary>
+    public void Respawn()
+    {
+        if (isDead) return;
+        isDead = true;
+        animator.SetTrigger("dead");
+        StartCoroutine(RespawnCoroutine());
+    }
+
+    private IEnumerator RespawnCoroutine()
+    {
+        yield return new WaitForSeconds(respawnDelay);
+
+        // teleport back
+        transform.position = _spawnPoint;
+        body.linearVelocity = Vector2.zero;
+        body.gravityScale = 3f;
+
+        // reset all state
+        sDown = false;
+        dashing = false;
+        canSwing = 0f;
+        dashCooldown = 0f;
+
+        // clear death trigger, animator will fall back to Idle
+        animator.ResetTrigger("dead");
+        animator.SetBool("isRunning", false);
+        animator.SetBool("isGrounded", true);
+
+        isDead = false;
     }
 }
