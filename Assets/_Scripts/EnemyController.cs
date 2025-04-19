@@ -47,7 +47,7 @@ public class EnemyController : MonoBehaviour
                     StartAttack();
                     _lastAttackTime = Time.time;
                 }
-                _rb.velocity = Vector2.zero;
+                _rb.linearVelocity = Vector2.zero;
                 _anim.SetBool(ANIM_WALK, false);
             }
             else
@@ -58,7 +58,7 @@ public class EnemyController : MonoBehaviour
         }
         else
         {
-            _rb.velocity = Vector2.zero;
+            _rb.linearVelocity = Vector2.zero;
             _anim.SetBool(ANIM_WALK, false);
         }
     }
@@ -66,7 +66,7 @@ public class EnemyController : MonoBehaviour
     void MoveTowardsPlayer()
     {
         Vector2 dir = (_player.position - transform.position).normalized;
-        _rb.velocity = new Vector2(dir.x * moveSpeed, _rb.velocity.y);
+        _rb.linearVelocity = new Vector2(dir.x * moveSpeed, _rb.linearVelocity.y);
 
         // flip if needed
         if (dir.x > 0 && transform.localScale.x < 0) Flip();
