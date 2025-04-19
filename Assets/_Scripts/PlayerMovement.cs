@@ -26,6 +26,10 @@ public class PlayerMovement : MonoBehaviour
     // Grapple internals
     private LineRenderer lineRenderer;
     private Vector3 originalPos;
+    private float swingRadius = 10f;
+    private float swingSpeed = 2f;
+    private float swingAngle;
+    private Vector2 startingPoint;
 
     // State
     private Vector3 _spawnPoint;
@@ -78,7 +82,10 @@ public class PlayerMovement : MonoBehaviour
         {
             ContinueGrapple();
         }
-        EndGrappleCleanup();
+        else
+        {
+            EndGrappleCleanup();
+        }
 
         // 3) Movement & Abilities
         HandleMovement();
@@ -87,9 +94,11 @@ public class PlayerMovement : MonoBehaviour
     void StartGrapple()
     {
         sDown = true;
-        originalPos = new Vector3(body.position.x + 4f, 9.5f, 0f);
-        body.gravityScale = 0f;
+        startingPoint = body.position;
+        originalPos = new Vector2(body.position.x + swingRadius, 10.0f);
+        body.gravityScale = 0;
         lineRenderer.enabled = true;
+        swingAngle = 0f;
         body.Sleep();
     }
 
@@ -98,8 +107,11 @@ public class PlayerMovement : MonoBehaviour
         canSwing += Time.deltaTime;
         lineRenderer.SetPosition(0, body.position);
         lineRenderer.SetPosition(1, originalPos);
-        Physics.gravity = Vector2.zero;
-        body.position = new Vector2(transform.position.x + 0.2f, body.position.y);
+        Physics.gravity = new Vector2(0, 0);
+        swingAngle += Time.deltaTime * swingSpeed;
+        float x = Mathf.Cos(swingAngle) * swingRadius;
+        float y = Mathf.Sin(swingAngle) * swingRadius * 0.1f;
+        body.MovePosition(new Vector2(originalPos.x - x, startingPoint.y - y));
     }
 
     void EndGrappleCleanup()
