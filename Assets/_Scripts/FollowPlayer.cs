@@ -4,17 +4,11 @@ public class FollowPlayer : MonoBehaviour
 {
     public Transform player;
 
-    // Update is called once per frame
     void Update()
     {
-        if ((player.position.x > transform.position.x || player.position.x < transform.position.x) && player.position.x > -10)
-        {
-            transform.position = new Vector3(player.position.x, 0, -10);
-        }
-
-        if (player.position.x < -10)
-        {
-            transform.position = new Vector3(-10, 0, -10);
-        }
+        // keep camera (or UI) following the player’s X
+        if (player == null) return;
+        float px = player.position.x;
+        transform.position = new Vector3(Mathf.Max(px, -10f), 0f, -10f);
     }
 }
