@@ -14,7 +14,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Grapple Settings")]
     [Range(0.01f, 0.5f)]
     public float lineWidth = 0.05f;
-    public float maxSwingTime = 1.5f;
+    public float maxSwingTime = 1.5f, maxDashCooldown = 5f;
 
     [Header("Dash Settings")]
     public bool enableDash = true;
@@ -29,15 +29,24 @@ public class PlayerMovement : MonoBehaviour
     private LineRenderer lineRenderer;
     private Vector3 swingAnchor;
     private Vector3 spawnPoint;
+    private Vector2 startingPoint;
+    private Vector3 originalPos;
+
+    private float swingRadius = 10f;
+    private float swingSpeed = 2f;
+    private float swingAngle;
     private float swingTimer;
     private bool swinging;
-    private bool facingRight = true;
-    private bool isDead;
 
     // state
+    private Vector3 _spawnPoint;
+    private bool isDead = false;
+
     public static bool sDown, dashing;
     public static float canSwing, dashCooldown;
     private int jumpCount;
+
+    private bool canDash, canDoubleJump, facingRight = true;
 
     void Start()
     {
@@ -59,49 +68,66 @@ public class PlayerMovement : MonoBehaviour
         lineRenderer.startColor = Color.red;
         lineRenderer.endColor = Color.red;
         lineRenderer.enabled = false;
+
+        // Unlock dash/double?jump by scene name
+        var lvl = SceneManager.GetActiveScene().name;
+        canDash = lvl == "Level 2" || lvl == "Level 3";
+        canDoubleJump = lvl == "Level 3";
     }
 
     void Update()
     {
+        // 1) Block all input while “dead”
         if (isDead) return;
 
-        HandleGrapple();
+        // 2) Grapple
+        if (Input.GetKey(KeyCode.S) && !sDown && canSwing == 0f)
+        {
+            StartGrapple();
+        }
+        if (Input.GetKey(KeyCode.S) && sDown && canSwing < maxSwingTime)
+        {
+            ContinueGrapple();
+        }
+        else
+        {
+            EndGrappleCleanup();
+        }
+
+        // 3) Movement & Abilities
         HandleMovement();
     }
-
-    void HandleGrapple()
+    void StartGrapple()
     {
-        // start swing
-        if (Input.GetKey(KeyCode.S) && !sDown && canSwing <= 0f)
-        {
-            sDown = true;
-            swinging = true;
-            swingTimer = 0f;
-            lineRenderer.enabled = true;
-            swingAnchor = transform.position + Vector3.right * 2f;
-            body.gravityScale = 0f;
-            body.Sleep();
-        }
-        // continue swing
-        if (Input.GetKey(KeyCode.S) && swinging && swingTimer < maxSwingTime)
-        {
-            swingTimer += Time.deltaTime;
-            canSwing = swingTimer;
-            lineRenderer.SetPosition(0, transform.position);
-            lineRenderer.SetPosition(1, swingAnchor);
-            Physics.gravity = Vector2.zero;
-            return; // skip normal movement
-        }
-        // cleanup
-        if (!Input.GetKey(KeyCode.S) || swingTimer >= maxSwingTime)
-        {
-            swinging = false;
-            sDown = false;
-            canSwing = Mathf.Max(0f, canSwing - Time.deltaTime);
-            body.gravityScale = 3f;
-            lineRenderer.enabled = false;
-            Physics.gravity = Vector2.down * 9.81f;
-        }
+        sDown = true;
+        startingPoint = body.position;
+        originalPos = new Vector2(body.position.x + swingRadius, 20.0f);
+        body.gravityScale = 0;
+        lineRenderer.enabled = true;
+        swingAngle = 0f;
+        body.Sleep();
+    }
+
+    void ContinueGrapple()
+    {
+        canSwing += Time.deltaTime;
+        lineRenderer.SetPosition(0, body.position);
+        lineRenderer.SetPosition(1, originalPos);
+        Physics.gravity = new Vector2(0, 0);
+        swingAngle += Time.deltaTime * swingSpeed;
+        float x = Mathf.Cos(swingAngle) * swingRadius;
+        float y = Mathf.Sin(swingAngle) * swingRadius * 0.1f;
+        body.MovePosition(new Vector2(originalPos.x - x, startingPoint.y - y));
+    }
+
+    void EndGrappleCleanup()
+    {
+        canSwing -= Time.deltaTime;
+        if (canSwing < 0f) canSwing = 0f;
+        sDown = false;
+        body.gravityScale = 3f;
+        lineRenderer.enabled = false;
+        Physics.gravity = new Vector2(0, -9.81f);
     }
 
     void HandleMovement()
@@ -125,11 +151,15 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             if (grounded) DoJump();
-            else if (jumpCount == 0) { jumpCount++; DoJump(); }
+            else if (canDoubleJump && jumpCount < 1)
+            {
+                jumpCount++;
+                DoJump();
+            }
         }
 
         // dash
-        if (enableDash && dashCooldown <= 0f && Input.GetKeyDown(KeyCode.LeftShift))
+        if (canDash && dashCooldown <= 0f && Input.GetMouseButtonDown(0))
             StartDash();
 
         dashCooldown = Mathf.Max(0f, dashCooldown - Time.deltaTime);
@@ -148,15 +178,21 @@ public class PlayerMovement : MonoBehaviour
         dashing = true;
         dashCooldown = dashCooldownMax;
         GetComponent<Animator>().SetTrigger("dash");
-        Vector2 dir = facingRight ? Vector2.right : Vector2.left;
-        body.linearVelocity = dir * dashSpeed;
-        Invoke(nameof(EndDash), 0.1f);
+
+        Vector2 playerScreenPosition = Camera.main.WorldToScreenPoint(body.transform.position);
+        Vector2 mouseScreenPosition = Input.mousePosition;
+
+        Vector2 playerToMouseVector = (mouseScreenPosition - playerScreenPosition).normalized;
+
+        body.linearVelocity = playerToMouseVector * dashSpeed;
     }
 
     void EndDash() => dashing = false;
 
     bool IsGrounded()
     {
+        EndDash();
+
         foreach (var gc in ground.GetComponentsInChildren<Collider2D>())
             if (playerCollider.IsTouching(gc)) return true;
         return false;
@@ -193,7 +229,7 @@ public class PlayerMovement : MonoBehaviour
         // reset animation
         var anim = GetComponent<Animator>();
         anim.ResetTrigger("dead");
-        anim.Play("Idle");
+        anim.Play("MonkeyIdle");
         isDead = false;
     }
 
