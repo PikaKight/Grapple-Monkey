@@ -11626,25 +11626,28 @@ PrefabInstance:
     - target: {fileID: 2923653833301852058, guid: 72fa21429f221b44583c2d7fb85366cd,
         type: 3}
       propertyPath: m_text
-      value: 'Gaia''s Blessing: May the wind of fate guide you home.
-
-        Press
-        ''Left Click'' to dash in the direction you''re clicking.'
+      value: "May the Earth grant you strength to DASH forth into the unknown.\n
+        \nPress 'Left Click' to dash in the direction you're clicking."
       objectReference: {fileID: 0}
     - target: {fileID: 2980954584623286778, guid: 72fa21429f221b44583c2d7fb85366cd,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 17.3359
+      value: 16.1885
+      objectReference: {fileID: 0}
+    - target: {fileID: 2980954584623286778, guid: 72fa21429f221b44583c2d7fb85366cd,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 6.1459
       objectReference: {fileID: 0}
     - target: {fileID: 2980954584623286778, guid: 72fa21429f221b44583c2d7fb85366cd,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -428
+      value: -428.87167
       objectReference: {fileID: 0}
     - target: {fileID: 2980954584623286778, guid: 72fa21429f221b44583c2d7fb85366cd,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -134.24
+      value: -133.4136
       objectReference: {fileID: 0}
     - target: {fileID: 7947911505737750448, guid: 72fa21429f221b44583c2d7fb85366cd,
         type: 3}
