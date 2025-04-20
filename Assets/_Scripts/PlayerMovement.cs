@@ -5,19 +5,25 @@ using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [Header("Movement")]
     public Rigidbody2D body;
     public BoxCollider2D playerCollider;
     public float moveSpeed = 8f;
     public float jumpForce = 600f;
     public GameObject ground;
 
+    [Header("Grapple Settings")]
+    [Range(0.01f, 0.5f)]
     public float lineWidth = 0.05f;
     public float maxSwingTime = 1.5f, maxDashCooldown = 5f;
 
+    [Header("Dash Settings")]
     public bool enableDash = true;
     public float dashCooldownMax = 5f;
     public float dashSpeed = 20f;
 
+    [Header("Respawn Settings")]
+    [Tooltip("delay in seconds before teleporting back")]
     public float respawnDelay = 1f;
 
     // internals
@@ -37,22 +43,16 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 _spawnPoint;
     private bool isDead = false;
 
-    LineRenderer lineRenderer;
-    Vector3 swingAnchor;
-    Vector3 spawnPoint;
-    float swingTimer;
-    bool swinging, facingRight = true, isDead;
     public static bool sDown, dashing;
     public static float canSwing, dashCooldown;
-    int jumpCount;
+    private int jumpCount;
 
     private bool canDash, canDoubleJump, facingRight = true;
-
     void Start()
     {
         // give 5 coins on first play
-        if (!PlayerPrefs.HasKey("Flames"))
-            PlayerPrefs.SetInt("Flames", 5);
+        
+        PlayerPrefs.SetInt("Flames", 5);
 
         spawnPoint = transform.position;
 
@@ -129,27 +129,24 @@ public class PlayerMovement : MonoBehaviour
         Physics.gravity = new Vector2(0, -9.81f);
     }
 
-    void handleMovement()
+    void HandleMovement()
     {
-        bool grounded = false;
-        foreach (var gc in ground.GetComponentsInChildren<Collider2D>())
-            if (playerCollider.IsTouching(gc)) { grounded = true; break; }
-
+        bool grounded = IsGrounded();
         GetComponent<Animator>().SetBool("isGrounded", grounded);
         if (grounded) jumpCount = 0;
 
         float h = Input.GetAxis("Horizontal");
         GetComponent<Animator>().SetBool("isRunning", Mathf.Abs(h) > 0.1f);
 
-        // move left/right
+        // horizontal
         if (!dashing)
             body.linearVelocity = new Vector2(h * moveSpeed, body.linearVelocity.y);
 
-        // flip sprite when needed
-        if (h > 0 && !facingRight) flip();
-        if (h < 0 && facingRight) flip();
+        // flip
+        if (h > 0f && !facingRight) Flip();
+        if (h < 0f && facingRight) Flip();
 
-        // jump or double jump
+        // jump & double
         if (Input.GetKeyDown(KeyCode.Space))
         {
             if (grounded) DoJump();
@@ -163,18 +160,11 @@ public class PlayerMovement : MonoBehaviour
         // dash
         if (canDash && dashCooldown <= 0f && Input.GetMouseButtonDown(0))
             StartDash();
-            if (grounded) doJump();
-            else if (jumpCount == 0) { jumpCount++; doJump(); }
-        }
-
-        // dash if allowed
-        if (enableDash && dashCooldown <= 0f && Input.GetKeyDown(KeyCode.LeftShift))
-            startDash();
 
         dashCooldown = Mathf.Max(0f, dashCooldown - Time.deltaTime);
     }
 
-    void doJump()
+    void DoJump()
     {
         var anim = GetComponent<Animator>();
         anim.SetTrigger("jump");
@@ -182,7 +172,7 @@ public class PlayerMovement : MonoBehaviour
         body.AddForce(Vector2.up * jumpForce);
     }
 
-    void startDash()
+    void StartDash()
     {
         dashing = true;
         dashCooldown = dashCooldownMax;
@@ -196,7 +186,7 @@ public class PlayerMovement : MonoBehaviour
         body.linearVelocity = playerToMouseVector * dashSpeed;
     }
 
-    void endDash() => dashing = false;
+    void EndDash() => dashing = false;
 
     bool IsGrounded()
     {
@@ -243,7 +233,7 @@ public class PlayerMovement : MonoBehaviour
         anim.ResetTrigger("death");
         anim.Play("MonkeyIdle");
 
-    
+
         isDead = false;
     }
 
@@ -254,4 +244,4 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(duration);
         moveSpeed -= amount;
     }
-}
+    }

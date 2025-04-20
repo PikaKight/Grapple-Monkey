@@ -312,6 +312,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Spike (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 2624271961537959384, guid: fabe0036d14f0ac4ea6b6dc67fd47022,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 2624271961537959384, guid: fabe0036d14f0ac4ea6b6dc67fd47022,
+        type: 3}
+      propertyPath: m_SpriteSortPoint
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5102209194795058982, guid: fabe0036d14f0ac4ea6b6dc67fd47022,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -365,7 +375,7 @@ PrefabInstance:
     - target: {fileID: 6773668023536144188, guid: fabe0036d14f0ac4ea6b6dc67fd47022,
         type: 3}
       propertyPath: m_IsTrigger
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -24507,6 +24517,11 @@ PrefabInstance:
       propertyPath: m_Size.x
       value: 1.6997371
       objectReference: {fileID: 0}
+    - target: {fileID: 2624271961537959384, guid: fabe0036d14f0ac4ea6b6dc67fd47022,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 5102209194795058982, guid: fabe0036d14f0ac4ea6b6dc67fd47022,
         type: 3}
       propertyPath: m_LocalScale.x
@@ -24585,7 +24600,7 @@ PrefabInstance:
     - target: {fileID: 6773668023536144188, guid: fabe0036d14f0ac4ea6b6dc67fd47022,
         type: 3}
       propertyPath: m_IsTrigger
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6773668023536144188, guid: fabe0036d14f0ac4ea6b6dc67fd47022,
         type: 3}
@@ -24750,6 +24765,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Size.y
       value: 0.052431718
+      objectReference: {fileID: 0}
+    - target: {fileID: 2624271961537959384, guid: fabe0036d14f0ac4ea6b6dc67fd47022,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2624271961537959384, guid: fabe0036d14f0ac4ea6b6dc67fd47022,
+        type: 3}
+      propertyPath: m_SpriteSortPoint
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3392816517820999306, guid: fabe0036d14f0ac4ea6b6dc67fd47022,
         type: 3}
@@ -51381,6 +51406,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Spike
       objectReference: {fileID: 0}
+    - target: {fileID: 2624271961537959384, guid: fabe0036d14f0ac4ea6b6dc67fd47022,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 2624271961537959384, guid: fabe0036d14f0ac4ea6b6dc67fd47022,
+        type: 3}
+      propertyPath: m_SpriteSortPoint
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5102209194795058982, guid: fabe0036d14f0ac4ea6b6dc67fd47022,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -51434,7 +51469,7 @@ PrefabInstance:
     - target: {fileID: 6773668023536144188, guid: fabe0036d14f0ac4ea6b6dc67fd47022,
         type: 3}
       propertyPath: m_IsTrigger
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

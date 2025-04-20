@@ -3,7 +3,8 @@ using UnityEngine;
 
 public class SpikeCollision : MonoBehaviour
 {
-    void OnCollisionEnter2D(Collision2D col)
+
+    void OnTriggerEnter2D(Collider2D col
     {
         if (!col.collider.CompareTag("Player")) return;
 
@@ -14,5 +15,9 @@ public class SpikeCollision : MonoBehaviour
 
         // otherwise send player back to spawn
         col.collider.GetComponent<PlayerMovement>()?.Respawn();
+    }
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        
     }
 }
