@@ -1,12 +1,14 @@
-﻿using UnityEngine;
+﻿// EnemyCollision.cs
+using UnityEngine;
 
 [RequireComponent(typeof(EnemyController))]
 public class EnemyCollision : MonoBehaviour
 {
-    private EnemyController _ctrl;
+    EnemyController _ctrl;
 
     void Awake()
     {
+        // cache reference to our controller
         _ctrl = GetComponent<EnemyController>();
     }
 
@@ -14,8 +16,19 @@ public class EnemyCollision : MonoBehaviour
     {
         if (!col.collider.CompareTag("Player")) return;
 
-        // if player is mid‑swing or dashing, kill the enemy
+        // if player is swinging or dashing, die
         if (PlayerMovement.sDown || PlayerMovement.dashing)
+        {
             _ctrl.Die();
+            return;
+        }
+
+        // if player is immune, ignore
+        var ih = col.collider.GetComponent<ImmunityHandler>();
+        if (ih != null && !ih.shouldTakeDamage())
+            return;
+
+        // otherwise respawn player
+        col.collider.GetComponent<PlayerMovement>()?.Respawn();
     }
 }

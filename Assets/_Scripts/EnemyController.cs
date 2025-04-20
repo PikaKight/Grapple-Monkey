@@ -11,17 +11,15 @@ public class EnemyController : MonoBehaviour
     public float attackRange = 1.5f;
     public float attackCooldown = 2f;
 
-    // exposed read‑only for other scripts
     public bool isAttacking { get; private set; }
+    public bool isDead { get; private set; }
 
     private Transform _player;
     private Rigidbody2D _rb;
     private Animator _anim;
     private float _lastAttackTime;
-    private bool _isDead;
 
-    // Animator parameter names
-    const string ANIM_WALK = "isWalking";
+    const string ANIM_WALK = "isRunning";
     const string ANIM_ATTACK = "attack";
     const string ANIM_DEATH = "death";
 
@@ -35,7 +33,7 @@ public class EnemyController : MonoBehaviour
 
     void Update()
     {
-        if (_player == null || _isDead) return;
+        if (_player == null || isDead) return;
         float dist = Vector2.Distance(transform.position, _player.position);
 
         if (dist <= detectionRange)
@@ -68,7 +66,6 @@ public class EnemyController : MonoBehaviour
         Vector2 dir = (_player.position - transform.position).normalized;
         _rb.linearVelocity = new Vector2(dir.x * moveSpeed, _rb.linearVelocity.y);
 
-        // flip if needed
         if (dir.x > 0 && transform.localScale.x < 0) Flip();
         if (dir.x < 0 && transform.localScale.x > 0) Flip();
     }
@@ -86,7 +83,7 @@ public class EnemyController : MonoBehaviour
         _anim.SetTrigger(ANIM_ATTACK);
     }
 
-    // **Animation Event** on the last frame of your Attack clip
+    // animation event
     public void EndAttack()
     {
         isAttacking = false;
@@ -94,12 +91,11 @@ public class EnemyController : MonoBehaviour
 
     public void Die()
     {
-        _isDead = true;
+        if (isDead) return;
+        isDead = true;
         _anim.SetTrigger(ANIM_DEATH);
-
         GetComponent<Collider2D>().enabled = false;
         _rb.simulated = false;
-
         Destroy(gameObject, 2f);
     }
 

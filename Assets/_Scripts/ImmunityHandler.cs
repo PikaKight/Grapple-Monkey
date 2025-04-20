@@ -1,47 +1,37 @@
+// ImmunityHandler.cs
 using UnityEngine;
 using System.Collections;
 
 public class ImmunityHandler : MonoBehaviour
 {
-    // true while the player should NOT take damage
     public bool isImmune { get; private set; } = false;
+    public GameObject immunityEffect; // optional glow when immune
 
-    // optional VFX to show when immune
-    [Tooltip("optional effect to show while immune")]
-    public GameObject immunityEffect;
-
-    private void Awake()
+    void Awake()
     {
-        // hide the effect at start
-        if (immunityEffect)
-            immunityEffect.SetActive(false);
+        // hide any effect at start
+        if (immunityEffect) immunityEffect.SetActive(false);
     }
 
-    /// <summary>
-    /// grant immunity for exactly `duration` seconds
-    /// </summary>
-    public void GrantImmunity(float duration)
+    // grant invulnerability for a few seconds
+    public void grantImmunity(float duration)
     {
-        StartCoroutine(ImmunityCoroutine(duration));
+        StartCoroutine(immunityRoutine(duration));
     }
 
-    private IEnumerator ImmunityCoroutine(float duration)
+    IEnumerator immunityRoutine(float duration)
     {
         isImmune = true;
-        if (immunityEffect)
-            immunityEffect.SetActive(true);
+        if (immunityEffect) immunityEffect.SetActive(true);
 
         yield return new WaitForSeconds(duration);
 
         isImmune = false;
-        if (immunityEffect)
-            immunityEffect.SetActive(false);
+        if (immunityEffect) immunityEffect.SetActive(false);
     }
 
-    /// <summary>
-    /// return true if this object should take damage right now
-    /// </summary>
-    public bool ShouldTakeDamage()
+    // return true if player should take damage
+    public bool shouldTakeDamage()
     {
         return !isImmune;
     }

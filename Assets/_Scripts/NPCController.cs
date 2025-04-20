@@ -85,11 +85,10 @@ public class NPCController : MonoBehaviour
         int coins = PlayerPrefs.GetInt("Flames", 0);
         if (coins < optionCost[idx]) return;
 
-        // deduct cost
+        // deduct the cost
         coins -= optionCost[idx];
         PlayerPrefs.SetInt("Flames", coins);
 
-        // apply effect
         switch (idx)
         {
             case 0: // heal
@@ -108,14 +107,15 @@ public class NPCController : MonoBehaviour
             case 2: // immunity
                 var ih = FindObjectOfType<ImmunityHandler>();
                 if (ih != null)
-                    ih.GrantImmunity(effectDuration[2]);
+                    ih.grantImmunity(effectDuration[2]);
                 break;
         }
 
-        // refresh coin display + show farewell
+        // refresh coins display + show farewell
         _ui.UpdateCoinDisplay(coins);
         _ui.ShowFarewell(farewell);
     }
+
 
     /// <summary>
     /// called by UI when the farewell popup has fully closed

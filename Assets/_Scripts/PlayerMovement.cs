@@ -1,3 +1,4 @@
+// PlayerMovement.cs
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -47,17 +48,15 @@ public class PlayerMovement : MonoBehaviour
     private int jumpCount;
 
     private bool canDash, canDoubleJump, facingRight = true;
-
     void Start()
     {
-        //testing REMOVE BEFORE HANDIN
-
+        // give 5 coins on first play
+        
         PlayerPrefs.SetInt("Flames", 5);
-
 
         spawnPoint = transform.position;
 
-        // grapple line setup
+        // set up the grapple rope
         lineRenderer = gameObject.AddComponent<LineRenderer>();
         lineRenderer.startWidth = 1f;
         lineRenderer.endWidth = 1f;
@@ -77,7 +76,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        // 1) Block all input while “dead”
+        // 1) Block all input while ï¿½deadï¿½
         if (isDead) return;
 
         // 2) Grapple
@@ -210,36 +209,39 @@ public class PlayerMovement : MonoBehaviour
     {
         if (isDead) return;
         isDead = true;
-        GetComponent<Animator>().SetTrigger("dead");
-        StartCoroutine(RespawnCoroutine());
+
+        // play death animation
+        GetComponent<Animator>().SetTrigger("death");
+        StartCoroutine(respawnRoutine());
     }
 
-    IEnumerator RespawnCoroutine()
+    IEnumerator respawnRoutine()
     {
         yield return new WaitForSeconds(respawnDelay);
-        // teleport back to spawn
+
+        // bring player back
         transform.position = spawnPoint;
         body.linearVelocity = Vector2.zero;
         body.gravityScale = 3f;
 
-        // reset swing/dash state
+        // reset states
         sDown = dashing = false;
         canSwing = dashCooldown = 0f;
 
-        // reset animation
+        // go back to idle
         var anim = GetComponent<Animator>();
-        anim.ResetTrigger("dead");
+        anim.ResetTrigger("death");
         anim.Play("MonkeyIdle");
+
+
         isDead = false;
     }
 
-    /// <summary>
-    /// called by NPC to give temporary speed boost
-    /// </summary>
+    // used by npc to boost speed for a while
     public IEnumerator BoostSpeed(float amount, float duration)
     {
         moveSpeed += amount;
         yield return new WaitForSeconds(duration);
         moveSpeed -= amount;
     }
-}
+    }
