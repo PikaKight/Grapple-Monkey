@@ -1,24 +1,35 @@
 ﻿using UnityEngine;
+using TMPro;
+
 
 public class CollectableController : MonoBehaviour
 {
+    public TextMeshProUGUI statusText;
+
     void OnTriggerEnter2D(Collider2D col)
     {
         if (!col.CompareTag("Player")) return;
 
-        int flames = PlayerPrefs.GetInt("Flames", 0);
-
-        if (tag == "Collect")
-            flames++;
-        else if (tag == "Health")
+        switch (gameObject.tag)
         {
-            int hp = PlayerPrefs.GetInt("Health", 100);
-            PlayerPrefs.SetInt("Health", hp + 1);
+            case "Collect":
+               
+                int flames = PlayerPrefs.GetInt("Flames", 0);
+                flames++;
+                PlayerPrefs.SetInt("Flames", flames);
+
+                statusText.text = $"Sacred Flames: {flames}";
+
+                break;
+
+            case "Health":
+                int hp = PlayerPrefs.GetInt("Health", 100);
+                hp++;
+                PlayerPrefs.SetInt("Health", hp);
+                //statusText.text = $"Health: {hp}";
+                break;
         }
 
-        PlayerPrefs.SetInt("Flames", flames);
         gameObject.SetActive(false);
-
-        // optional: update on-screen UI here
     }
 }
