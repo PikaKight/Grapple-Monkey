@@ -95,7 +95,7 @@ public class PlayerMovement : MonoBehaviour
     {
         sDown = true;
         startingPoint = body.position;
-        originalPos = new Vector2(body.position.x + swingRadius, 10.0f);
+        originalPos = new Vector2(body.position.x + swingRadius, 20.0f);
         body.gravityScale = 0;
         lineRenderer.enabled = true;
         swingAngle = 0f;
