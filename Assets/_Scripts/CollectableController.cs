@@ -19,7 +19,6 @@ public class CollectableController : MonoBehaviour
         PlayerPrefs.SetInt("Flames", flames);
         gameObject.SetActive(false);
 
-        // (optional) if you have an on‑screen coin UI,
-        // find its script and call an update method here.
+        // optional: update on-screen UI here
     }
 }

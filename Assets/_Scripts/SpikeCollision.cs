@@ -1,19 +1,18 @@
-﻿using UnityEngine;
+﻿// SpikeCollision.cs
+using UnityEngine;
 
 public class SpikeCollision : MonoBehaviour
 {
-    void OnCollisionEnter2D(Collision2D collision)
+    void OnCollisionEnter2D(Collision2D col)
     {
-        if (!collision.collider.CompareTag("Player")) return;
+        if (!col.collider.CompareTag("Player")) return;
 
-        var pm = collision.collider.GetComponent<PlayerMovement>();
-        var ih = collision.collider.GetComponent<ImmunityHandler>();
-
-        // if Immune, skip damage
-        if (ih != null && !ih.ShouldTakeDamage())
+        // if player is immune, ignore spikes
+        var ih = col.collider.GetComponent<ImmunityHandler>();
+        if (ih != null && !ih.shouldTakeDamage())
             return;
 
-        // otherwise respawn
-        pm?.Respawn();
+        // otherwise send player back to spawn
+        col.collider.GetComponent<PlayerMovement>()?.Respawn();
     }
 }

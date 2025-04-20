@@ -1,28 +1,23 @@
+// PlayerMovement.cs
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [Header("Movement")]
     public Rigidbody2D body;
     public BoxCollider2D playerCollider;
     public float moveSpeed = 8f;
     public float jumpForce = 600f;
     public GameObject ground;
 
-    [Header("Grapple Settings")]
-    [Range(0.01f, 0.5f)]
     public float lineWidth = 0.05f;
     public float maxSwingTime = 1.5f, maxDashCooldown = 5f;
 
-    [Header("Dash Settings")]
     public bool enableDash = true;
     public float dashCooldownMax = 5f;
     public float dashSpeed = 20f;
 
-    [Header("Respawn Settings")]
-    [Tooltip("delay in seconds before teleporting back")]
     public float respawnDelay = 1f;
 
     // internals
@@ -42,22 +37,26 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 _spawnPoint;
     private bool isDead = false;
 
+    LineRenderer lineRenderer;
+    Vector3 swingAnchor;
+    Vector3 spawnPoint;
+    float swingTimer;
+    bool swinging, facingRight = true, isDead;
     public static bool sDown, dashing;
     public static float canSwing, dashCooldown;
-    private int jumpCount;
+    int jumpCount;
 
     private bool canDash, canDoubleJump, facingRight = true;
 
     void Start()
     {
-        //testing REMOVE BEFORE HANDIN
-
-        PlayerPrefs.SetInt("Flames", 5);
-
+        // give 5 coins on first play
+        if (!PlayerPrefs.HasKey("Flames"))
+            PlayerPrefs.SetInt("Flames", 5);
 
         spawnPoint = transform.position;
 
-        // grapple line setup
+        // set up the grapple rope
         lineRenderer = gameObject.AddComponent<LineRenderer>();
         lineRenderer.startWidth = 1f;
         lineRenderer.endWidth = 1f;
@@ -77,7 +76,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        // 1) Block all input while “dead”
+        // 1) Block all input while ï¿½deadï¿½
         if (isDead) return;
 
         // 2) Grapple
@@ -130,24 +129,27 @@ public class PlayerMovement : MonoBehaviour
         Physics.gravity = new Vector2(0, -9.81f);
     }
 
-    void HandleMovement()
+    void handleMovement()
     {
-        bool grounded = IsGrounded();
+        bool grounded = false;
+        foreach (var gc in ground.GetComponentsInChildren<Collider2D>())
+            if (playerCollider.IsTouching(gc)) { grounded = true; break; }
+
         GetComponent<Animator>().SetBool("isGrounded", grounded);
         if (grounded) jumpCount = 0;
 
         float h = Input.GetAxis("Horizontal");
         GetComponent<Animator>().SetBool("isRunning", Mathf.Abs(h) > 0.1f);
 
-        // horizontal
+        // move left/right
         if (!dashing)
             body.linearVelocity = new Vector2(h * moveSpeed, body.linearVelocity.y);
 
-        // flip
-        if (h > 0f && !facingRight) Flip();
-        if (h < 0f && facingRight) Flip();
+        // flip sprite when needed
+        if (h > 0 && !facingRight) flip();
+        if (h < 0 && facingRight) flip();
 
-        // jump & double
+        // jump or double jump
         if (Input.GetKeyDown(KeyCode.Space))
         {
             if (grounded) DoJump();
@@ -161,11 +163,18 @@ public class PlayerMovement : MonoBehaviour
         // dash
         if (canDash && dashCooldown <= 0f && Input.GetMouseButtonDown(0))
             StartDash();
+            if (grounded) doJump();
+            else if (jumpCount == 0) { jumpCount++; doJump(); }
+        }
+
+        // dash if allowed
+        if (enableDash && dashCooldown <= 0f && Input.GetKeyDown(KeyCode.LeftShift))
+            startDash();
 
         dashCooldown = Mathf.Max(0f, dashCooldown - Time.deltaTime);
     }
 
-    void DoJump()
+    void doJump()
     {
         var anim = GetComponent<Animator>();
         anim.SetTrigger("jump");
@@ -173,7 +182,7 @@ public class PlayerMovement : MonoBehaviour
         body.AddForce(Vector2.up * jumpForce);
     }
 
-    void StartDash()
+    void startDash()
     {
         dashing = true;
         dashCooldown = dashCooldownMax;
@@ -187,7 +196,7 @@ public class PlayerMovement : MonoBehaviour
         body.linearVelocity = playerToMouseVector * dashSpeed;
     }
 
-    void EndDash() => dashing = false;
+    void endDash() => dashing = false;
 
     bool IsGrounded()
     {
@@ -210,32 +219,35 @@ public class PlayerMovement : MonoBehaviour
     {
         if (isDead) return;
         isDead = true;
-        GetComponent<Animator>().SetTrigger("dead");
-        StartCoroutine(RespawnCoroutine());
+
+        // play death animation
+        GetComponent<Animator>().SetTrigger("death");
+        StartCoroutine(respawnRoutine());
     }
 
-    IEnumerator RespawnCoroutine()
+    IEnumerator respawnRoutine()
     {
         yield return new WaitForSeconds(respawnDelay);
-        // teleport back to spawn
+
+        // bring player back
         transform.position = spawnPoint;
         body.linearVelocity = Vector2.zero;
         body.gravityScale = 3f;
 
-        // reset swing/dash state
+        // reset states
         sDown = dashing = false;
         canSwing = dashCooldown = 0f;
 
-        // reset animation
+        // go back to idle
         var anim = GetComponent<Animator>();
-        anim.ResetTrigger("dead");
+        anim.ResetTrigger("death");
         anim.Play("MonkeyIdle");
+
+    
         isDead = false;
     }
 
-    /// <summary>
-    /// called by NPC to give temporary speed boost
-    /// </summary>
+    // used by npc to boost speed for a while
     public IEnumerator BoostSpeed(float amount, float duration)
     {
         moveSpeed += amount;
