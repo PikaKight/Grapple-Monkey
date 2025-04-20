@@ -38,6 +38,8 @@ public class PlayerMovement : MonoBehaviour
     private float swingAngle;
     private float swingTimer;
     private bool swinging;
+    // 0 is left, 1 is right
+    private bool swingDirection;
 
     // state
     private Vector3 _spawnPoint;
@@ -98,9 +100,10 @@ public class PlayerMovement : MonoBehaviour
     }
     void StartGrapple()
     {
+        swingDirection = facingRight;
         sDown = true;
         startingPoint = body.position;
-        originalPos = new Vector2(body.position.x + swingRadius, 20.0f);
+        originalPos = swingDirection ? new Vector2(body.position.x + swingRadius, 20.0f) : new Vector2(body.position.x - swingRadius, 20.0f);
         body.gravityScale = 0;
         lineRenderer.enabled = true;
         swingAngle = 0f;
@@ -116,7 +119,7 @@ public class PlayerMovement : MonoBehaviour
         swingAngle += Time.deltaTime * swingSpeed;
         float x = Mathf.Cos(swingAngle) * swingRadius;
         float y = Mathf.Sin(swingAngle) * swingRadius * 0.1f;
-        body.MovePosition(new Vector2(originalPos.x - x, startingPoint.y - y));
+        body.MovePosition(swingDirection ? new Vector2(originalPos.x - x, startingPoint.y - y) : new Vector2(originalPos.x + x, startingPoint.y - y));
     }
 
     void EndGrappleCleanup()
