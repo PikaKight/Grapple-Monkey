@@ -2,13 +2,14 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class PlayerMovement : MonoBehaviour
 {
     [Header("Player Status")]
     public int maxHealth = 100;
     public float timeInvincible = 2.0f;
-    
+
     [Header("Movement")]
     public Rigidbody2D body;
     public BoxCollider2D playerCollider;
@@ -30,9 +31,19 @@ public class PlayerMovement : MonoBehaviour
     [Tooltip("delay in seconds before teleporting back")]
     public float respawnDelay = 1f;
 
+    [Header("UI Texts")]
+    public TextMeshProUGUI healthText;
+    public TextMeshProUGUI flamesText;
+
     // Health
     public float health { get { return currentHealth; } }
     float currentHealth = 0;
+    bool isInvincible;
+    float damageCooldown = 0;
+    
+    // Flames
+    public float flames { get { return collectedFlames; } }
+    int collectedFlames = 0;
 
     // internals
     private LineRenderer lineRenderer;
@@ -60,11 +71,9 @@ public class PlayerMovement : MonoBehaviour
     private bool canDash, canDoubleJump, facingRight = true;
     void Start()
     {
-        // give 5 coins on first play
-        
-        PlayerPrefs.SetInt("Flames", 5);
 
         currentHealth = maxHealth;
+        healthText.text = $"Health: {currentHealth} HP";
 
         spawnPoint = transform.position;
 
@@ -93,6 +102,16 @@ public class PlayerMovement : MonoBehaviour
         {
             Respawn();
         }
+
+        if (isInvincible)
+        {
+            damageCooldown -= Time.deltaTime;
+            if (damageCooldown <= 0)
+            {
+                isInvincible = false;
+            }
+        }
+
 
         // 2) Grapple
         if (Input.GetKey(KeyCode.S) && !sDown && canSwing == 0f)
@@ -260,4 +279,28 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(duration);
         moveSpeed -= amount;
     }
+
+
+    public void changeHealth(float dHealth)
+    {
+        if (dHealth < 0)
+        {
+            if (isInvincible)
+            {
+                return;
+            }
+
+            isInvincible = true;
+            damageCooldown = timeInvincible;
+        }
+
+        currentHealth = Mathf.Clamp(currentHealth + dHealth, 0, maxHealth);
+        healthText.text = $"Health: {currentHealth} HP";
     }
+
+    public void changeFlames(int flame)
+    {
+        collectedFlames += flame;
+        flamesText.text = $"Sacred Flames: {flames}";
+    }
+}
