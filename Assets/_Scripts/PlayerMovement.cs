@@ -8,7 +8,7 @@ public class PlayerMovement : MonoBehaviour
 {
     [Header("Player Status")]
     public int maxHealth = 100;
-    public float timeInvincible = 2.0f;
+    public float timeInvincible = 0.5f;
 
     [Header("Movement")]
     public Rigidbody2D body;
@@ -97,7 +97,6 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-
         if (currentHealth <= 0)
         {
             Respawn();
@@ -253,6 +252,7 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(respawnDelay);
 
         currentHealth = maxHealth;
+        healthText.text = $"Health: {currentHealth} HP";
 
         // bring player back
         transform.position = spawnPoint;

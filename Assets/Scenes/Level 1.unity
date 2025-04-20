@@ -50138,7 +50138,7 @@ PrefabInstance:
     - target: {fileID: 3502669001956804883, guid: 6e17a6ecae9862e4db23046ac8413065,
         type: 3}
       propertyPath: timeInvincible
-      value: 1
+      value: 0.25
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
