@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PauseControl : MonoBehaviour
 {
@@ -23,9 +24,17 @@ public class PauseControl : MonoBehaviour
         Time.timeScale = 1;
         pauseMenu.SetActive(false);
     }
+    
+    public void ResetLevel()
+    {
+        Time.timeScale = 1;
+        Scene currentScene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(currentScene.name);
+    }
 
     public void QuitGame()
     {
-        Application.Quit();
+        Time.timeScale = 1;
+        SceneManager.LoadScene("Title");
     }
 }
