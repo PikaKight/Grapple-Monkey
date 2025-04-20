@@ -4,20 +4,16 @@ using UnityEngine;
 public class SpikeCollision : MonoBehaviour
 {
 
-    void OnTriggerEnter2D(Collider2D col
+    void OnTriggerEnter2D(Collider2D col)
     {
-        if (!col.collider.CompareTag("Player")) return;
+        if (!col.gameObject.CompareTag("Player")) return;
 
         // if player is immune, ignore spikes
-        var ih = col.collider.GetComponent<ImmunityHandler>();
+        var ih = col.gameObject.GetComponent<ImmunityHandler>();
         if (ih != null && !ih.shouldTakeDamage())
             return;
 
         // otherwise send player back to spawn
-        col.collider.GetComponent<PlayerMovement>()?.Respawn();
-    }
-    void OnCollisionEnter2D(Collision2D col)
-    {
-        
+        col.gameObject.GetComponent<PlayerMovement>()?.Respawn();
     }
 }
