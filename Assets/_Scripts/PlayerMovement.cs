@@ -5,6 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [Header("Player Status")]
+    public int maxHealth = 100;
+    public float timeInvincible = 2.0f;
+    
     [Header("Movement")]
     public Rigidbody2D body;
     public BoxCollider2D playerCollider;
@@ -25,6 +29,10 @@ public class PlayerMovement : MonoBehaviour
     [Header("Respawn Settings")]
     [Tooltip("delay in seconds before teleporting back")]
     public float respawnDelay = 1f;
+
+    // Health
+    public float health { get { return currentHealth; } }
+    float currentHealth = 0;
 
     // internals
     private LineRenderer lineRenderer;
@@ -56,6 +64,8 @@ public class PlayerMovement : MonoBehaviour
         
         PlayerPrefs.SetInt("Flames", 5);
 
+        currentHealth = maxHealth;
+
         spawnPoint = transform.position;
 
         // set up the grapple rope
@@ -78,8 +88,11 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        // 1) Block all input while �dead�
-        if (isDead) return;
+
+        if (currentHealth <= 0)
+        {
+            Respawn();
+        }
 
         // 2) Grapple
         if (Input.GetKey(KeyCode.S) && !sDown && canSwing == 0f)
@@ -210,8 +223,6 @@ public class PlayerMovement : MonoBehaviour
 
     public void Respawn()
     {
-        if (isDead) return;
-        isDead = true;
 
         // play death animation
         GetComponent<Animator>().SetTrigger("death");
@@ -221,6 +232,8 @@ public class PlayerMovement : MonoBehaviour
     IEnumerator respawnRoutine()
     {
         yield return new WaitForSeconds(respawnDelay);
+
+        currentHealth = maxHealth;
 
         // bring player back
         transform.position = spawnPoint;

@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3899720443766165374}
   m_Layer: 0
   m_Name: Sacred Flame
-  m_TagString: Untagged
+  m_TagString: Collect
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -139,6 +139,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d85b8cdbd19c91b43ba0d3bc882fe338, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  statusText: {fileID: 0}
 --- !u!95 &3899720443766165374
 Animator:
   serializedVersion: 7

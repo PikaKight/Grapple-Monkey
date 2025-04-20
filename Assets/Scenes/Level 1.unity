@@ -469,6 +469,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &112627448 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 496128437664787955, guid: 3a31f4957c714cf4a9b5e1b98eb57066,
+    type: 3}
+  m_PrefabInstance: {fileID: 4463172724492071635}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &119511562 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5808977612076968592, guid: 8a7b885508c0323448abe44078eea7e2,
+    type: 3}
+  m_PrefabInstance: {fileID: 2095041871}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &138125876 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1141845724983661952, guid: e646f7b0eccdf694a9c1fe5e4293a692,
@@ -705,6 +717,12 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &237561969 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5808977612076968592, guid: 8a7b885508c0323448abe44078eea7e2,
+    type: 3}
+  m_PrefabInstance: {fileID: 664888711}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &261964691
 GameObject:
   m_ObjectHideFlags: 0
@@ -1256,27 +1274,32 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 1908073041}
     m_Modifications:
     - target: {fileID: 2004971661832562319, guid: 8a7b885508c0323448abe44078eea7e2,
         type: 3}
       propertyPath: m_Name
       value: Sacred Flame (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 2092363814835625848, guid: 8a7b885508c0323448abe44078eea7e2,
+        type: 3}
+      propertyPath: statusText
+      value: 
+      objectReference: {fileID: 1620453000}
     - target: {fileID: 5808977612076968592, guid: 8a7b885508c0323448abe44078eea7e2,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 24.346546
+      value: 7.881571
       objectReference: {fileID: 0}
     - target: {fileID: 5808977612076968592, guid: 8a7b885508c0323448abe44078eea7e2,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -6.4047318
+      value: -12.679303
       objectReference: {fileID: 0}
     - target: {fileID: 5808977612076968592, guid: 8a7b885508c0323448abe44078eea7e2,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -6.2095494
       objectReference: {fileID: 0}
     - target: {fileID: 5808977612076968592, guid: 8a7b885508c0323448abe44078eea7e2,
         type: 3}
@@ -21642,6 +21665,12 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &575261736 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5722909805789403887, guid: d536ad89121a39f40a6761285eef81d3,
+    type: 3}
+  m_PrefabInstance: {fileID: 612885346}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &612885346
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21814,33 +21843,44 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &633193279 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5808977612076968592, guid: 8a7b885508c0323448abe44078eea7e2,
+    type: 3}
+  m_PrefabInstance: {fileID: 2011047176}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &664888711
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 1908073041}
     m_Modifications:
     - target: {fileID: 2004971661832562319, guid: 8a7b885508c0323448abe44078eea7e2,
         type: 3}
       propertyPath: m_Name
       value: Sacred Flame (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 2092363814835625848, guid: 8a7b885508c0323448abe44078eea7e2,
+        type: 3}
+      propertyPath: statusText
+      value: 
+      objectReference: {fileID: 1620453000}
     - target: {fileID: 5808977612076968592, guid: 8a7b885508c0323448abe44078eea7e2,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 57.97686
+      value: 41.511887
       objectReference: {fileID: 0}
     - target: {fileID: 5808977612076968592, guid: 8a7b885508c0323448abe44078eea7e2,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.79169273
+      value: -5.4828787
       objectReference: {fileID: 0}
     - target: {fileID: 5808977612076968592, guid: 8a7b885508c0323448abe44078eea7e2,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -6.2095494
       objectReference: {fileID: 0}
     - target: {fileID: 5808977612076968592, guid: 8a7b885508c0323448abe44078eea7e2,
         type: 3}
@@ -23791,27 +23831,32 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 1908073041}
     m_Modifications:
     - target: {fileID: 2004971661832562319, guid: 8a7b885508c0323448abe44078eea7e2,
         type: 3}
       propertyPath: m_Name
       value: Sacred Flame (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 2092363814835625848, guid: 8a7b885508c0323448abe44078eea7e2,
+        type: 3}
+      propertyPath: statusText
+      value: 
+      objectReference: {fileID: 1620453000}
     - target: {fileID: 5808977612076968592, guid: 8a7b885508c0323448abe44078eea7e2,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 76.367714
+      value: 59.90274
       objectReference: {fileID: 0}
     - target: {fileID: 5808977612076968592, guid: 8a7b885508c0323448abe44078eea7e2,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.2150106
+      value: -5.059561
       objectReference: {fileID: 0}
     - target: {fileID: 5808977612076968592, guid: 8a7b885508c0323448abe44078eea7e2,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -6.2095494
       objectReference: {fileID: 0}
     - target: {fileID: 5808977612076968592, guid: 8a7b885508c0323448abe44078eea7e2,
         type: 3}
@@ -23946,11 +23991,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &884553201 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5808977612076968592, guid: 8a7b885508c0323448abe44078eea7e2,
+    type: 3}
+  m_PrefabInstance: {fileID: 1734894788}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &895104198 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5808977612076968592, guid: 8a7b885508c0323448abe44078eea7e2,
     type: 3}
   m_PrefabInstance: {fileID: 3318802499131381951}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &910207653 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5808977612076968592, guid: 8a7b885508c0323448abe44078eea7e2,
+    type: 3}
+  m_PrefabInstance: {fileID: 776718036}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &919188441
 GameObject:
@@ -49193,6 +49250,12 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1437529562 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5808977612076968592, guid: 8a7b885508c0323448abe44078eea7e2,
+    type: 3}
+  m_PrefabInstance: {fileID: 2105334298}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1464774214
 GameObject:
   m_ObjectHideFlags: 0
@@ -49416,6 +49479,12 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1591651340 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5808977612076968592, guid: 8a7b885508c0323448abe44078eea7e2,
+    type: 3}
+  m_PrefabInstance: {fileID: 438837685}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1593446990
 GameObject:
   m_ObjectHideFlags: 0
@@ -49517,6 +49586,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a21de1da4eafa43a88d69158b53ae000, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  boss: {fileID: 575261736}
+  rune: {fileID: 112627448}
 --- !u!61 &1593446994
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -49594,12 +49665,12 @@ PrefabInstance:
     - target: {fileID: 8711163324393967139, guid: 55314fefb8bfc0e4ba68f409d1dd4803,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 7.61
+      value: 79.83
       objectReference: {fileID: 0}
     - target: {fileID: 8711163324393967139, guid: 55314fefb8bfc0e4ba68f409d1dd4803,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -7.41
+      value: 1.42
       objectReference: {fileID: 0}
     - target: {fileID: 8711163324393967139, guid: 55314fefb8bfc0e4ba68f409d1dd4803,
         type: 3}
@@ -49659,10 +49730,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 4594643059385805561, guid: eaf035325b976c041bfeec625e94ae4f,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 485.165
+      objectReference: {fileID: 0}
+    - target: {fileID: 4594643059385805561, guid: eaf035325b976c041bfeec625e94ae4f,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -149.41757
+      objectReference: {fileID: 0}
     - target: {fileID: 4641702931174256303, guid: eaf035325b976c041bfeec625e94ae4f,
         type: 3}
       propertyPath: m_text
-      value: 'Coins: '
+      value: 'Sacred Flames: 0'
+      objectReference: {fileID: 0}
+    - target: {fileID: 4641702931174256303, guid: eaf035325b976c041bfeec625e94ae4f,
+        type: 3}
+      propertyPath: m_margin.z
+      value: -0.33190918
       objectReference: {fileID: 0}
     - target: {fileID: 7287838343074948112, guid: eaf035325b976c041bfeec625e94ae4f,
         type: 3}
@@ -50007,27 +50093,32 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 1908073041}
     m_Modifications:
     - target: {fileID: 2004971661832562319, guid: 8a7b885508c0323448abe44078eea7e2,
         type: 3}
       propertyPath: m_Name
       value: Sacred Flame
       objectReference: {fileID: 0}
+    - target: {fileID: 2092363814835625848, guid: 8a7b885508c0323448abe44078eea7e2,
+        type: 3}
+      propertyPath: statusText
+      value: 
+      objectReference: {fileID: 1620453000}
     - target: {fileID: 5808977612076968592, guid: 8a7b885508c0323448abe44078eea7e2,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 90.38428
+      value: 73.919304
       objectReference: {fileID: 0}
     - target: {fileID: 5808977612076968592, guid: 8a7b885508c0323448abe44078eea7e2,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -7.157296
+      value: -13.431868
       objectReference: {fileID: 0}
     - target: {fileID: 5808977612076968592, guid: 8a7b885508c0323448abe44078eea7e2,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -6.2095494
       objectReference: {fileID: 0}
     - target: {fileID: 5808977612076968592, guid: 8a7b885508c0323448abe44078eea7e2,
         type: 3}
@@ -50456,6 +50547,11 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Health
       objectReference: {fileID: 0}
+    - target: {fileID: 2092363814835625848, guid: 8a7b885508c0323448abe44078eea7e2,
+        type: 3}
+      propertyPath: statusText
+      value: 
+      objectReference: {fileID: 1620453000}
     - target: {fileID: 5808977612076968592, guid: 8a7b885508c0323448abe44078eea7e2,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -50633,6 +50729,13 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 884553201}
+  - {fileID: 119511562}
+  - {fileID: 633193279}
+  - {fileID: 237561969}
+  - {fileID: 910207653}
+  - {fileID: 1437529562}
+  - {fileID: 1591651340}
   - {fileID: 895104198}
   - {fileID: 1880259513}
   m_Father: {fileID: 0}
@@ -50739,27 +50842,32 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 1908073041}
     m_Modifications:
     - target: {fileID: 2004971661832562319, guid: 8a7b885508c0323448abe44078eea7e2,
         type: 3}
       propertyPath: m_Name
       value: Sacred Flame (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 2092363814835625848, guid: 8a7b885508c0323448abe44078eea7e2,
+        type: 3}
+      propertyPath: statusText
+      value: 
+      objectReference: {fileID: 1620453000}
     - target: {fileID: 5808977612076968592, guid: 8a7b885508c0323448abe44078eea7e2,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 109.27
+      value: 92.80502
       objectReference: {fileID: 0}
     - target: {fileID: 5808977612076968592, guid: 8a7b885508c0323448abe44078eea7e2,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.38
+      value: -10.654572
       objectReference: {fileID: 0}
     - target: {fileID: 5808977612076968592, guid: 8a7b885508c0323448abe44078eea7e2,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -6.2095494
       objectReference: {fileID: 0}
     - target: {fileID: 5808977612076968592, guid: 8a7b885508c0323448abe44078eea7e2,
         type: 3}
@@ -51069,27 +51177,32 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 1908073041}
     m_Modifications:
     - target: {fileID: 2004971661832562319, guid: 8a7b885508c0323448abe44078eea7e2,
         type: 3}
       propertyPath: m_Name
       value: Sacred Flame (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 2092363814835625848, guid: 8a7b885508c0323448abe44078eea7e2,
+        type: 3}
+      propertyPath: statusText
+      value: 
+      objectReference: {fileID: 1620453000}
     - target: {fileID: 5808977612076968592, guid: 8a7b885508c0323448abe44078eea7e2,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 101.155396
+      value: 84.69042
       objectReference: {fileID: 0}
     - target: {fileID: 5808977612076968592, guid: 8a7b885508c0323448abe44078eea7e2,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -7.298402
+      value: -13.572973
       objectReference: {fileID: 0}
     - target: {fileID: 5808977612076968592, guid: 8a7b885508c0323448abe44078eea7e2,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -6.2095494
       objectReference: {fileID: 0}
     - target: {fileID: 5808977612076968592, guid: 8a7b885508c0323448abe44078eea7e2,
         type: 3}
@@ -51137,27 +51250,32 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 1908073041}
     m_Modifications:
     - target: {fileID: 2004971661832562319, guid: 8a7b885508c0323448abe44078eea7e2,
         type: 3}
       propertyPath: m_Name
       value: Sacred Flame (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 2092363814835625848, guid: 8a7b885508c0323448abe44078eea7e2,
+        type: 3}
+      propertyPath: statusText
+      value: 
+      objectReference: {fileID: 1620453000}
     - target: {fileID: 5808977612076968592, guid: 8a7b885508c0323448abe44078eea7e2,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 67.99
+      value: 51.525024
       objectReference: {fileID: 0}
     - target: {fileID: 5808977612076968592, guid: 8a7b885508c0323448abe44078eea7e2,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.05
+      value: -3.2245715
       objectReference: {fileID: 0}
     - target: {fileID: 5808977612076968592, guid: 8a7b885508c0323448abe44078eea7e2,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -6.2095494
       objectReference: {fileID: 0}
     - target: {fileID: 5808977612076968592, guid: 8a7b885508c0323448abe44078eea7e2,
         type: 3}
@@ -51212,6 +51330,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sacred Flame
       objectReference: {fileID: 0}
+    - target: {fileID: 2092363814835625848, guid: 8a7b885508c0323448abe44078eea7e2,
+        type: 3}
+      propertyPath: statusText
+      value: 
+      objectReference: {fileID: 1620453000}
     - target: {fileID: 5808977612076968592, guid: 8a7b885508c0323448abe44078eea7e2,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -51398,6 +51521,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Rune of Gaia
       objectReference: {fileID: 0}
+    - target: {fileID: 3684837866940518480, guid: 3a31f4957c714cf4a9b5e1b98eb57066,
+        type: 3}
+      propertyPath: boss
+      value: 
+      objectReference: {fileID: 575261736}
+    - target: {fileID: 3684837866940518480, guid: 3a31f4957c714cf4a9b5e1b98eb57066,
+        type: 3}
+      propertyPath: rune
+      value: 
+      objectReference: {fileID: 112627448}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -51502,13 +51635,6 @@ SceneRoots:
   - {fileID: 732458363}
   - {fileID: 1908073041}
   - {fileID: 376154413}
-  - {fileID: 1734894788}
-  - {fileID: 2095041871}
-  - {fileID: 2011047176}
-  - {fileID: 664888711}
-  - {fileID: 776718036}
-  - {fileID: 2105334298}
-  - {fileID: 438837685}
   - {fileID: 1002742192}
   - {fileID: 2014189922}
   - {fileID: 1632192313}
