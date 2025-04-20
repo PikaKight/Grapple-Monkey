@@ -49654,6 +49654,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 4641702931174256303, guid: eaf035325b976c041bfeec625e94ae4f,
+        type: 3}
+      propertyPath: m_text
+      value: 'Coins: '
+      objectReference: {fileID: 0}
     - target: {fileID: 7287838343074948112, guid: eaf035325b976c041bfeec625e94ae4f,
         type: 3}
       propertyPath: m_Pivot.x
