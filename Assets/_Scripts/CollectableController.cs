@@ -20,7 +20,7 @@ public class CollectableController : MonoBehaviour
                 flames++;
                 PlayerPrefs.SetInt("Flames", flames);
 
-                player.changeFlames(1);
+                player.changeFlames(flames);
 
                 break;
 
