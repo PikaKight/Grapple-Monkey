@@ -219,6 +219,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 2
   detectionRange: 14
+  damage: 30
   attackRange: 1.5
   attackCooldown: 2
 --- !u!114 &7301873432022919481
