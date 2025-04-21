@@ -4,29 +4,30 @@ using TMPro;
 
 public class CollectableController : MonoBehaviour
 {
-    public TextMeshProUGUI statusText;
+    public int health = 2;
 
     void OnTriggerEnter2D(Collider2D col)
     {
         if (!col.CompareTag("Player")) return;
 
+        PlayerMovement player = col.gameObject.GetComponent<PlayerMovement>();
+
         switch (gameObject.tag)
         {
             case "Collect":
-               
+
                 int flames = PlayerPrefs.GetInt("Flames", 0);
                 flames++;
                 PlayerPrefs.SetInt("Flames", flames);
 
-                statusText.text = $"Sacred Flames: {flames}";
+                player.changeFlames(1);
 
                 break;
 
             case "Health":
-                int hp = PlayerPrefs.GetInt("Health", 100);
-                hp++;
-                PlayerPrefs.SetInt("Health", hp);
-                //statusText.text = $"Health: {hp}";
+
+                player.changeHealth(health);
+
                 break;
         }
 

@@ -8,6 +8,7 @@ public class EnemyController : MonoBehaviour
     public float detectionRange = 10f;
 
     [Header("Attack")]
+    public int damage = 10;
     public float attackRange = 1.5f;
     public float attackCooldown = 2f;
 

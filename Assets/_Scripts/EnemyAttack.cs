@@ -36,6 +36,6 @@ public class EnemyAttack : MonoBehaviour
             return;
 
         // otherwise respawn player
-        other.GetComponent<PlayerMovement>()?.Respawn();
+        other.GetComponent<PlayerMovement>()?.changeHealth(-1 * gameObject.GetComponent<EnemyController>().damage);
     }
 }

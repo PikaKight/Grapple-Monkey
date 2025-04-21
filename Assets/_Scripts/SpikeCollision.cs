@@ -3,8 +3,10 @@ using UnityEngine;
 
 public class SpikeCollision : MonoBehaviour
 {
+    public int damage = 5;
 
-    void OnTriggerEnter2D(Collider2D col)
+
+    void OnTriggerStay2D(Collider2D col)
     {
         if (!col.gameObject.CompareTag("Player")) return;
 
@@ -13,7 +15,9 @@ public class SpikeCollision : MonoBehaviour
         if (ih != null && !ih.shouldTakeDamage())
             return;
 
+        Debug.Log("Player on");
+
         // otherwise send player back to spawn
-        col.gameObject.GetComponent<PlayerMovement>()?.Respawn();
+        col.gameObject.GetComponent<PlayerMovement>()?.changeHealth(-1 * damage);
     }
 }

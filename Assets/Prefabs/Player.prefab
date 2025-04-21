@@ -133,6 +133,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d54a54a28978f44219a9d1eb35a8993e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHealth: 100
+  timeInvincible: 0.25
   body: {fileID: 2161071482515336858}
   playerCollider: {fileID: 597786980517033180}
   moveSpeed: 9
@@ -145,6 +147,8 @@ MonoBehaviour:
   dashCooldownMax: 5
   dashSpeed: 20
   respawnDelay: 1
+  healthText: {fileID: 0}
+  flamesText: {fileID: 0}
 --- !u!95 &5421700932899987142
 Animator:
   serializedVersion: 7
