@@ -76,8 +76,8 @@ public class PlayerMovement : MonoBehaviour
         lineRenderer.useWorldSpace = true;
         lineRenderer.positionCount = 2;
         lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
-        lineRenderer.startColor = Color.red;
-        lineRenderer.endColor = Color.red;
+        lineRenderer.startColor = Color.green;
+        lineRenderer.endColor = Color.green;
         lineRenderer.enabled = false;
 
         // Unlock dash/double?jump by scene name
