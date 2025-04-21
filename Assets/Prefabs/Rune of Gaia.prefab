@@ -189,6 +189,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a21de1da4eafa43a88d69158b53ae000, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  boss: {fileID: 0}
+  rune: {fileID: 496128437664787955}
 --- !u!61 &3151598928983479350
 BoxCollider2D:
   m_ObjectHideFlags: 0

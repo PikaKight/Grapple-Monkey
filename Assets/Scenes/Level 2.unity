@@ -1159,7 +1159,7 @@ PrefabInstance:
         type: 3}
       propertyPath: rune
       value: 
-      objectReference: {fileID: 1336331287}
+      objectReference: {fileID: 2074609713}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3187,12 +3187,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fd4ef78e7bec47dcb6c879ddead4504, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &1336331287 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3488106710695647884, guid: 3a31f4957c714cf4a9b5e1b98eb57066,
-    type: 3}
-  m_PrefabInstance: {fileID: 576492789}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1369582843
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13207,6 +13201,12 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2074609713 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 496128437664787955, guid: 3a31f4957c714cf4a9b5e1b98eb57066,
+    type: 3}
+  m_PrefabInstance: {fileID: 576492789}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2118803227
 GameObject:
   m_ObjectHideFlags: 0
