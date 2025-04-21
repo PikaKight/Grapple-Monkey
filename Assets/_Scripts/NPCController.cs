@@ -22,12 +22,14 @@ public class NPCController : MonoBehaviour
     public List<float> effectDuration;  // duration for speed/immunity
 
     // internal
+    private PlayerMovement player;
     private Transform _player;
     private NPCUIManager _ui;
     private bool _inRange, _busy;
 
     void Start()
     {
+        player = GameObject.Find("Player").GetComponent<PlayerMovement>();
         _player = GameObject.FindWithTag("Player").transform;
         _ui = FindObjectOfType<NPCUIManager>();
 
@@ -69,6 +71,9 @@ public class NPCController : MonoBehaviour
 
         // update UI
         _ui.UpdateCoinDisplay(coins);
+
+        player.changeFlames(coins);
+
         _ui.ShowGreeting(
             greeting,
             labels,

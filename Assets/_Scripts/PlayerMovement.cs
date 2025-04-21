@@ -308,7 +308,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void changeFlames(int flame)
     {
-        collectedFlames += flame;
-        flamesText.text = $"Sacred Flames: {flames}";
+        collectedFlames = flame;
+        flamesText.text = $"Sacred Flames: {collectedFlames}";
     }
 }
