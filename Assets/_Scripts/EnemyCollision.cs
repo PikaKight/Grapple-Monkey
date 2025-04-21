@@ -29,6 +29,6 @@ public class EnemyCollision : MonoBehaviour
             return;
 
         // otherwise respawn player
-        col.collider.GetComponent<PlayerMovement>()?.Respawn();
+        col.gameObject.GetComponent<PlayerMovement>()?.changeHealth(-1 * gameObject.GetComponent<EnemyController>().damage);
     }
 }
