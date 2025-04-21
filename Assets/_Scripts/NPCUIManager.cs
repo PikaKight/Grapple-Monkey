@@ -121,6 +121,6 @@ public class NPCUIManager : MonoBehaviour
     /// </summary>
     public void UpdateCoinDisplay(int coins)
     {
-        coinText.text = $"Coins: {coins}";
+        coinText.text = $"Sacred Flames: {coins}";
     }
 }

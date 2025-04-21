@@ -36,13 +36,13 @@ public class PlayerMovement : MonoBehaviour
     public TextMeshProUGUI flamesText;
 
     // Health
-    public float health { get { return currentHealth; } }
-    float currentHealth = 0;
+    public int health { get { return currentHealth; } }
+    int currentHealth = 0;
     bool isInvincible;
     float damageCooldown = 0;
     
     // Flames
-    public float flames { get { return collectedFlames; } }
+    public int flames { get { return collectedFlames; } }
     int collectedFlames = 0;
 
     // internals
@@ -71,8 +71,16 @@ public class PlayerMovement : MonoBehaviour
     private bool canDash, canDoubleJump, facingRight = true;
     void Start()
     {
+        if (SceneManager.GetActiveScene().name == "Level 1")
+        {
+            PlayerPrefs.SetInt("Flames", 0);
+            PlayerPrefs.SetInt("Health", maxHealth);
+        }
+        
+        currentHealth = PlayerPrefs.GetInt("Health", maxHealth);
 
-        currentHealth = maxHealth;
+        collectedFlames = PlayerPrefs.GetInt("Flames", 0);
+        
         healthText.text = $"Health: {currentHealth} HP";
 
         spawnPoint = transform.position;
@@ -294,7 +302,7 @@ public class PlayerMovement : MonoBehaviour
             damageCooldown = timeInvincible;
         }
 
-        currentHealth = Mathf.Clamp(currentHealth + dHealth, 0, maxHealth);
+        currentHealth = (int)Mathf.Clamp(currentHealth + dHealth, 0, maxHealth);
         healthText.text = $"Health: {currentHealth} HP";
     }
 
